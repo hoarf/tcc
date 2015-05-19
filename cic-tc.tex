@@ -21,34 +21,84 @@
 %==============================================================================
 \begin{abstract}
 
-    Este documento é uma revisão do estado da arte em relação as técnicas de
-    DeepLearning utilizadas no reconhecimento de caracteres escritos à mão,
-    tendo o banco de dados MNIST como meio de comparação. Além disso são
-    apresentadas algumas variações nos meta parâmetros do algoritmo tais como
-    <TODO> para avaliar o impacto no tempo de execução e na qualidade do
-    resultado.
+  Este documento é uma revisão do estado da arte em relação as técnicas de
+DeepLearning utilizadas no reconhecimento de caracteres escritos à mão, tendo o
+banco de dados MNIST como meio de comparação. Além disso são apresentadas
+algumas variações nos meta parâmetros do algoritmo tais como <TODO> para
+avaliar o impacto no tempo de execução e na qualidade do resultado.
+
 \end{abstract}
 
-\begin{englishabstract}{Recognizing Handwritten Characters Using DeepLearning Algorithms}{IA, deeplearning}
+\begin{englishabstract}{Recognizing Handwritten Characters Using DeepLearning Algorithms}{IA, deeplearning} % tittle, keywords
 
   This document is a review of the state of the art in regards to DeepLearning
-  techniques used in handwritten characters reckognition having the MNIST
-  database for comparsion. Also, the inpact in the change of paramaters such as
-  <TODO> was measured to provide and indication of its effects on run speed and
-  quality of result.
+techniques used in handwritten characters reckognition having the MNIST
+database for comparsion. Also, the inpact in the change of paramaters such as
+<TODO> was measured to provide and indication of its effects on run speed and
+quality of result.
 
 \end{englishabstract}
 
 %==============================================================================
 \listoffigures
 \listoftables
-\begin{listofabbrv}{MNIST}
+\begin{listofabbrv}{MNIST} % largest
  \item[MNIST] Mixed National Institute of Standards and Technology
 \end{listofabbrv}
 \tableofcontents
 
 %==============================================================================
 \chapter{Introdução}
+
+  Depth of architecture refers to the number of levels of composition of
+non-linear operations in the func- tion learned. Whereas most current learning
+algorithms correspond to shallow architectures (1, 2 or 3 levels), the mammal
+brain is organized in a deep architecture (Serre, Kreiman, Kouh, Cadieu,
+Knoblich, & Poggio, 2007) with a given input percept represented at multiple
+levels of abstraction, each level corresponding to a different area of cortex.
+Humans often describe such concepts in hierarchical ways, with multiple levels
+of abstraction. The brain also appears to process information through multiple
+stages of transformation and representation. This is particularly clear in the
+primate visual system (Serre et al., 2007), with its sequence of processing
+stages: detection of edges, primitive shapes, and moving up to gradually more
+complex visual shapes.\cite{bengio2009learning}
+
+  More precisely, functions that can be compactly represented by a depth k
+architecture might require an exponential number of computational elements to
+be represented by a depth k − 1 architecture. Since the number of computational
+elements one can afford depends on the number of training examples available to
+tune or select them, the consequences are not just computational but also
+statistical: poor generalization may be expected when using an insufficiently
+deep architecture for representing some functions.\cite{bengio2009learning}
+
+  The most formal arguments about the power of deep architectures come from investigations into computa-
+tional complexity of circuits. The basic conclusion that these results suggest is that when a function can be
+compactly represented by a deep architecture, it might need a very large architecture to be represented by
+an insufficiently deep one.\cite{bengio2009learning}
+
+  After having motivated the need for deep architectures that are non-local estimators, we now turn to the
+difficult problem of training them. Experimental evidence suggests that training deep architectures is more
+difficult than training shallow architectures (Bengio et al., 2007; Erhan, Manzagol, Bengio, Bengio, & Vin-
+cent, 2009).\cite{bengio2009learning}
+
+  Until 2006, deep architectures have not been discussed much in the machine
+learning literature, because of poor training and generalization errors
+generally obtained (Bengio et al., 2007) using the standard random
+initialization of the parameters. Note that deep convolutional neural networks
+(LeCun, Boser, Denker, Hen- derson, Howard, Hubbard, & Jackel, 1989; Le Cun,
+Bottou, Bengio, & Haffner, 1998; Simard, Steinkraus, & Platt, 2003; Ranzato et
+al., 2007) were found easier to train, as discussed in Section 4.5, for reasons
+that have yet to be really clarified.  Many unreported negative observations as
+well as the experimental results in Bengio et al. (2007), Erhan et al. (2009)
+suggest that gradient-based training of deep supervised multi-layer neural
+networks (starting from random initialization) gets stuck in “apparent local
+minima or plateaus”, and that as the architecture gets deeper, it becomes more
+difficult to obtain good generalization. When starting from random initializa-
+tion, the solutions obtained with deeper neural networks appear to correspond
+to poor solutions that perform worse than the solutions obtained for networks
+with 1 or 2 hidden layers (Bengio et al., 2007; Larochelle, Bengio, Louradour,
+& Lamblin, 2009).\cite{bengio2009learning}
+
 \section{Figuras e tabelas}
 
 %==============================================================================

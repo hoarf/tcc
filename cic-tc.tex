@@ -44,60 +44,118 @@ quality of result.
 \listoftables
 \begin{listofabbrv}{MNIST} % largest
  \item[MNIST] Mixed National Institute of Standards and Technology
+ \item[CNN] Convolutional Neural Network
+ \item[GPU] Graphical Processment Unit
 \end{listofabbrv}
 \tableofcontents
 
 %==============================================================================
 \chapter{Introdução}
 
+\paragraph{} Nos últimos anos houve um grande avanço em áreas como a Computação
+Visual graças ao ressurgimento de um campo da Inteligência Artificial conhecido
+como Redes Neurais. Este progresso foi responsável pelo despertar do interesse
+e investimentos de grandes empresas como a Google, Facebook e outros que
+apostam no desenvolvimento de aplicações que há poucas décadas atrás eram tema
+de ficção científica como scanners faciais de alta precisão, reconhecimento de
+objetos em cenas, carros que não precisam de motorista e classificadores em
+geral. Essas novas técnicas prometem fazer uso da enorme quantidade de dados e
+informações disponíveis na internet e nas bases de dados das empresas e
+promovem discussões sobre o que significa para uma máquina aprender a realizar
+uma tarefa e como isto se compara ao aprendizado humano.
+
+\paragraph{} Este avanço foi causado fatores como o incremento da capacidade de
+processamento dos dispositivos e a ubiquidade de tecnologias como GPUs que
+facilitam o processamento vetorial paralelo de imagens, sons e outros domínios
+de alta dimensionalidade que possuiam um custo computacional elevado. além de
+avanços teóricos na maneira como estas redes são criadas que vieram a ser
+conhecidos como DeepLearning, nome este que constrasta a característica das
+Redes Neurais da década passada.
+
+\section{Objetivos}
+
+  Os objetivos deste trabalho consistem em efetuar uma revisão do histórico do
+  desenvolvimento das técnincas de DeepLearning e um resumo do seu estado da
+  arte e com a finalidade de adquirir proficiência no uso das mesmas.  Além
+  disso, serão apresentados resultados práticos obtidos com a execução de uma
+  Rede Neural Convolucional (CNN) no reconhecimento de caracteres escritos à
+  mão utilizando o algoritmo da rede LeNet de LeCun et al sobre a base MNIST.\@
+
+\section{Revisão}
+
   Depth of architecture refers to the number of levels of composition of
-non-linear operations in the func- tion learned. Whereas most current learning
-algorithms correspond to shallow architectures (1, 2 or 3 levels), the mammal
-brain is organized in a deep architecture (Serre, Kreiman, Kouh, Cadieu,
-Knoblich, & Poggio, 2007) with a given input percept represented at multiple
-levels of abstraction, each level corresponding to a different area of cortex.
-Humans often describe such concepts in hierarchical ways, with multiple levels
-of abstraction. The brain also appears to process information through multiple
-stages of transformation and representation. This is particularly clear in the
-primate visual system (Serre et al., 2007), with its sequence of processing
-stages: detection of edges, primitive shapes, and moving up to gradually more
-complex visual shapes.\cite{bengio2009learning}
+  non-linear operations in the func- tion learned. Whereas most current
+  learning algorithms correspond to shallow architectures (1, 2 or 3 levels),
+  the mammal brain is organized in a deep architecture (Serre, Kreiman, Kouh,
+  Cadieu, Knoblich, & Poggio, 2007) with a given input percept represented at
+  multiple levels of abstraction, each level corresponding to a different area
+  of cortex.  Humans often describe such concepts in hierarchical ways, with
+  multiple levels of abstraction. The brain also appears to process information
+  through multiple stages of transformation and representation. This is
+  particularly clear in the primate visual system (Serre et al., 2007), with
+  its sequence of processing stages: detection of edges, primitive shapes, and
+  moving up to gradually more complex visual shapes.\cite{bengio2009learning}
 
   More precisely, functions that can be compactly represented by a depth k
-architecture might require an exponential number of computational elements to
-be represented by a depth k − 1 architecture. Since the number of computational
-elements one can afford depends on the number of training examples available to
-tune or select them, the consequences are not just computational but also
-statistical: poor generalization may be expected when using an insufficiently
-deep architecture for representing some functions.\cite{bengio2009learning}
+  architecture might require an exponential number of computational elements to
+  be represented by a depth k − 1 architecture. Since the number of
+  computational elements one can afford depends on the number of training
+  examples available to tune or select them, the consequences are not just
+  computational but also statistical: poor generalization may be expected when
+  using an insufficiently deep architecture for representing some
+  functions.\cite{bengio2009learning}
 
-  The most formal arguments about the power of deep architectures come from investigations into computa-
-tional complexity of circuits. The basic conclusion that these results suggest is that when a function can be
-compactly represented by a deep architecture, it might need a very large architecture to be represented by
-an insufficiently deep one.\cite{bengio2009learning}
+  The most formal arguments about the power of deep architectures come from
+  investigations into computa- tional complexity of circuits. The basic
+  conclusion that these results suggest is that when a function can be
+  compactly represented by a deep architecture, it might need a very large
+  architecture to be represented by an insufficiently deep
+  one.\cite{bengio2009learning}
 
-  After having motivated the need for deep architectures that are non-local estimators, we now turn to the
-difficult problem of training them. Experimental evidence suggests that training deep architectures is more
-difficult than training shallow architectures (Bengio et al., 2007; Erhan, Manzagol, Bengio, Bengio, & Vin-
-cent, 2009).\cite{bengio2009learning}
+  After having motivated the need for deep architectures that are non-local
+  estimators, we now turn to the difficult problem of training them.
+  Experimental evidence suggests that training deep architectures is more
+  difficult than training shallow architectures (Bengio et al., 2007; Erhan,
+  Manzagol, Bengio, Bengio, & Vin- cent, 2009).\cite{bengio2009learning}
 
   Until 2006, deep architectures have not been discussed much in the machine
-learning literature, because of poor training and generalization errors
-generally obtained (Bengio et al., 2007) using the standard random
-initialization of the parameters. Note that deep convolutional neural networks
-(LeCun, Boser, Denker, Hen- derson, Howard, Hubbard, & Jackel, 1989; Le Cun,
-Bottou, Bengio, & Haffner, 1998; Simard, Steinkraus, & Platt, 2003; Ranzato et
-al., 2007) were found easier to train, as discussed in Section 4.5, for reasons
-that have yet to be really clarified.  Many unreported negative observations as
-well as the experimental results in Bengio et al. (2007), Erhan et al. (2009)
-suggest that gradient-based training of deep supervised multi-layer neural
-networks (starting from random initialization) gets stuck in “apparent local
-minima or plateaus”, and that as the architecture gets deeper, it becomes more
-difficult to obtain good generalization. When starting from random initializa-
-tion, the solutions obtained with deeper neural networks appear to correspond
-to poor solutions that perform worse than the solutions obtained for networks
-with 1 or 2 hidden layers (Bengio et al., 2007; Larochelle, Bengio, Louradour,
-& Lamblin, 2009).\cite{bengio2009learning}
+  learning literature, because of poor training and generalization errors
+  generally obtained (Bengio et al., 2007) using the standard random
+  initialization of the parameters. Note that deep convolutional neural
+  networks (LeCun, Boser, Denker, Hen- derson, Howard, Hubbard, & Jackel, 1989;
+  Le Cun, Bottou, Bengio, & Haffner, 1998; Simard, Steinkraus, & Platt, 2003;
+  Ranzato et al., 2007) were found easier to train, as discussed in Section
+  4.5, for reasons that have yet to be really clarified.  Many unreported
+  negative observations as well as the experimental results in Bengio et al.
+  (2007), Erhan et al. (2009) suggest that gradient-based training of deep
+  supervised multi-layer neural networks (starting from random initialization)
+  gets stuck in “apparent local minima or plateaus”, and that as the
+  architecture gets deeper, it becomes more difficult to obtain good
+  generalization. When starting from random initializa- tion, the solutions
+  obtained with deeper neural networks appear to correspond to poor solutions
+  that perform worse than the solutions obtained for networks with 1 or 2
+  hidden layers (Bengio et al., 2007; Larochelle, Bengio, Louradour, & Lamblin,
+  2009).\cite{bengio2009learning}
+
+  This happens even though k + 1-layer nets can easily represent what a k-layer
+  net can represent (without much added capacity), whereas the converse is not
+  true. How- ever, it was discovered (Hinton et al., 2006) that much better
+  results could be achieved when pre-training each layer with an unsupervised
+  learning algorithm, one layer after the other, starting with the first layer
+  (that directly takes in input the observed x). The initial experiments used
+  the RBM generative model for each layer (Hinton et al., 2006), and were
+  followed by experiments yielding similar results using variations of
+  auto-encoders for training each layer (Bengio et al., 2007; Ranzato et al.,
+  2007; Vincent et al., 2008).  Most of these papers exploit the idea of greedy
+  layer-wise unsupervised learning (developed in more de- tail in the next
+  section): first train the lower layer with an unsupervised learning algorithm
+  (such as one for the RBM or some auto-encoder), giving rise to an initial set
+  of parameter values for the first layer of a neural network. Then use the
+  output of the first layer (a new representation for the raw input) as input
+  for another layer, and similarly initialize that layer with an unsupervised
+  learning algorithm. After having thus initialized a number of layers, the
+  whole neural network can be fine-tuned with respect to a supervised training
+  criterion as usual.\cite{bengio2009learning}
 
 \section{Figuras e tabelas}
 

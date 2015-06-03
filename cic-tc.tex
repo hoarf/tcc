@@ -7,7 +7,7 @@
 \usepackage[alf,abnt-emphasize=bf]{abntex2cite}	% cit abnt
 
 %==============================================================================
-\title{Reconhecendo Caracteres Escritos à Mão Utilizando Algorítimos de DeepLearning}
+\title{Reconhecendo Caracteres Escritos à Mão Utilizando Algorítimos de Deep Learning}
 \author{Ficagna}{Alan}
 \advisor[Prof.~Dr.]{Engel}{Paulo Martins}
 \date{julho}{2015}
@@ -22,18 +22,18 @@
 \begin{abstract}
 
   Este documento é uma revisão do estado da arte em relação as técnicas de
-DeepLearning utilizadas no reconhecimento de caracteres escritos à mão, tendo o
+Deep Learning utilizadas no reconhecimento de caracteres escritos à mão, tendo o
 banco de dados MNIST como meio de comparação. Além disso são apresentadas
 algumas variações nos meta parâmetros do algoritmo tais como <TODO> para
 avaliar o impacto no tempo de execução e na qualidade do resultado.
 
 \end{abstract}
 
-\begin{englishabstract}{Recognizing Handwritten Characters Using DeepLearning Algorithms}{IA, deeplearning} % tittle, keywords
+\begin{englishabstract}{Recognizing Handwritten Characters Using Deep Learning Algorithms}{IA, deeplearning} % tittle, keywords
 
-  This document is a review of the state of the art in regards to DeepLearning
-techniques used in handwritten characters reckognition having the MNIST
-database for comparsion. Also, the inpact in the change of paramaters such as
+  This document is a review of the state of the art in regards to Deep Learning
+techniques used in handwritten characters recognition having the MNIST
+database for comparison. Also, the impact in the change of parameters such as
 <TODO> was measured to provide and indication of its effects on run speed and
 quality of result.
 
@@ -45,43 +45,62 @@ quality of result.
 \begin{listofabbrv}{MNIST} % largest
  \item[MNIST] Mixed National Institute of Standards and Technology
  \item[CNN] Convolutional Neural Network
- \item[GPU] Graphical Processment Unit
+ \item[GPU] Graphical Processing Unit
 \end{listofabbrv}
 \tableofcontents
 
 %==============================================================================
 \chapter{Introdução}
 
-\paragraph{} Nos últimos anos houve um grande avanço em áreas como a Computação
+Nos últimos anos houve um grande avanço em áreas como a Computação
 Visual graças ao ressurgimento de um campo da Inteligência Artificial conhecido
 como Redes Neurais. Este progresso foi responsável pelo despertar do interesse
-e investimentos de grandes empresas como a Google, Facebook e outros que
-apostam no desenvolvimento de aplicações que há poucas décadas atrás eram tema
-de ficção científica como scanners faciais de alta precisão, reconhecimento de
-objetos em cenas, carros que não precisam de motorista e classificadores em
-geral. Essas novas técnicas prometem fazer uso da enorme quantidade de dados e
-informações disponíveis na internet e nas bases de dados das empresas e
-promovem discussões sobre o que significa para uma máquina aprender a realizar
-uma tarefa e como isto se compara ao aprendizado humano.
+e investimentos de grandes empresas como Google, Facebook e outros que apostam
+no desenvolvimento de aplicações que há poucas décadas atrás eram apenas tema
+de ficção científica tais como scanners faciais de alta precisão,
+reconhecimento de objetos em cenas, carros que não precisam de motorista e
+vários tipos de classificadores em geral. Essas novas técnicas ficaram
+conhecidas como Deep Learning e prometem fazer uso da enorme quantidade de
+dados e informações disponíveis na internet e nas bases de dados das empresas.
 
-\paragraph{} Este avanço foi causado fatores como o incremento da capacidade de
-processamento dos dispositivos e a ubiquidade de tecnologias como GPUs que
-facilitam o processamento vetorial paralelo de imagens, sons e outros domínios
-de alta dimensionalidade que possuiam um custo computacional elevado. além de
-avanços teóricos na maneira como estas redes são criadas que vieram a ser
-conhecidos como DeepLearning, nome este que constrasta a característica das
-Redes Neurais da década passada.
+Este progresso foi causado por fatores como o incremento da capacidade de
+processamento dos computadores e a ubiquidade de tecnologias como GPUs que
+facilitaram o processamento vetorial e paralelo de imagens, sons e outros
+domínios de alta dimensionalidade que até então possuíam um custo computacional
+proibitivo. Além disso, novas contribuições teóricas também podem ser apontadas
+como responsáveis pela melhoria de desempenho tais como aprendizado semi
+supervisionado, uso de aprendizado baseado em energia <TODO COMPLETE>, <CITE>
 
 \section{Objetivos}
 
-  Os objetivos deste trabalho consistem em efetuar uma revisão do histórico do
-  desenvolvimento das técnincas de DeepLearning e um resumo do seu estado da
-  arte e com a finalidade de adquirir proficiência no uso das mesmas.  Além
-  disso, serão apresentados resultados práticos obtidos com a execução de uma
-  Rede Neural Convolucional (CNN) no reconhecimento de caracteres escritos à
-  mão utilizando o algoritmo da rede LeNet de LeCun et al sobre a base MNIST.\@
+O objetivo deste trabalho consiste em efetuar uma revisão do
+histórico do desenvolvimento das técnicas de Deep Learning e um resumo do seu
+estado da arte com a finalidade de adquirir proficiência no uso das mesmas.
+Além disso, serão apresentados resultados práticos obtidos com a execução de
+uma modelo que utiliza Deep Learning chamado de Rede Neural Convolucional
+(CNN) no reconhecimento de caracteres escritos à mão utilizando o algoritmo da
+rede LeNet de LeCun et al sobre a base MNIST.\@
 
 \section{Revisão}
+
+\subsection{Redes Neurais}
+
+\subsubsection{Inteligência Artificial}
+
+Discussões sobre a natureza da inteligência ou o que distingue um ser humano
+dos outros animais ou mesmo de outros objetos inanimados é tema de constantes
+debates desde pelo menos a época de Thomas Hobbes e sua filosofia mecanista que
+acreditava que o ser humano era como uma máquina. Porém, não é objetivo deste
+trabalho entrar nestas discussões e portanto o termo Inteligência Artificial
+aqui é usado puramente em seu sentido computacional embora reconheça as enormes
+implicações que descobertas nesta área podem vir a ter em outras disciplinas
+como a Filosofia.
+
+Como campo de pesquisa acadêmica, a Inteligência Artificial é geralmente
+reconhecida como originada na conferência em Dartmouth que reuniu 10
+pesquisadores e matemáticos que se tornariam líderes reconhecidos
+mundialmente na área.\cite{russell2003norvig}
+
 
   Depth of architecture refers to the number of levels of composition of
   non-linear operations in the func- tion learned. Whereas most current

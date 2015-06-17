@@ -2,9 +2,15 @@
 \documentclass[cic,tc]{iiufrgs}
 
 \usepackage[utf8]{inputenc}   % acentuação
+\usepackage{lmodern}          % allows arbitrary font size
 \usepackage{graphicx}         % figuras
 \usepackage{times}            % fonte Adobe Times
 \usepackage[alf,abnt-emphasize=bf]{abntex2cite}	% cit abnt
+
+% chktex latex syntax correction tool configurations
+% chktex-file 18 disable warnings about "
+% chktex-file 19 disable warnings about ô
+% chktex-file 6 disable italic correction warnings
 
 %==============================================================================
 \title{Reconhecendo Caracteres Escritos à Mão Utilizando Algorítimos de Deep Learning}
@@ -26,7 +32,6 @@ Deep Learning utilizadas no reconhecimento de caracteres escritos à mão, tendo
 banco de dados MNIST como meio de comparação. Além disso são apresentadas
 algumas variações nos meta parâmetros do algoritmo tais como <TODO> para
 avaliar o impacto no tempo de execução e na qualidade do resultado.
-
 \end{abstract}
 
 \begin{englishabstract}{Recognizing Handwritten Characters Using Deep Learning Algorithms}{IA, deeplearning} % tittle, keywords
@@ -54,7 +59,7 @@ quality of result.
 
 Nos últimos anos houve um grande avanço em áreas como a Computação
 Visual graças ao ressurgimento de um campo da Inteligência Artificial conhecido
-como Redes Neurais. Este progresso foi responsável pelo despertar do interesse
+c"om"o Redes Neurais. Este progresso foi responsável pelo despertar do interesse
 e investimentos de grandes empresas como Google, Facebook e outros que apostam
 no desenvolvimento de aplicações que há poucas décadas atrás eram apenas tema
 de ficção científica tais como scanners faciais de alta precisão,
@@ -83,98 +88,237 @@ rede LeNet de LeCun et al sobre a base MNIST.\@
 
 \section{Revisão}
 
-\subsection{Redes Neurais}
+\subsection{Inteligência Artificial}
 
-\subsubsection{Inteligência Artificial}
+Definir o que é inteligência não é uma tarefa fácil, e inteligência artificial
+é mais difícil ainda. Historicamente, existiram duas abordagens para a
+definição de inteligência: O comparativo com humanos e o comparativo com seres
+racionais.
 
-Discussões sobre a natureza da inteligência ou o que distingue um ser humano
-dos outros animais ou mesmo de outros objetos inanimados é tema de constantes
-debates desde pelo menos a época de Thomas Hobbes e sua filosofia mecanista que
-acreditava que o ser humano era como uma máquina. Porém, não é objetivo deste
-trabalho entrar nestas discussões e portanto o termo Inteligência Artificial
-aqui é usado puramente em seu sentido computacional embora reconheça as enormes
-implicações que descobertas nesta área podem vir a ter em outras disciplinas
-como a Filosofia.
+\subsubsection{Inteligência Humana}
 
-Como campo de pesquisa acadêmica, a Inteligência Artificial é geralmente
-reconhecida como originada na conferência em Dartmouth que reuniu 10
-pesquisadores e matemáticos que se tornariam líderes reconhecidos
-mundialmente na área.\cite{russell2003norvig}
+No primeiro modelo, o seres da espécie humana são tidos como parâmetros e
+portanto, qualquer avaliação de inteligência tem que se refletir em
+comportamentos ou pensamentos similares aos humanos. O Teste de Turing proposto
+pelo matemático Alan Turing (1950) foi uma maneira operacional de estabelecer
+inteligência pelo comparativo comportamental. Em sua versão mais simplificada,
+um computador poderia ser considerado inteligente se, ao ser interrogado por um
+humano com algumas questões, este não pudesse determinar se as respostas eram
+oriundas de um computador ou de uma pessoa. A Ciência Cognitiva, por outro
+lado, busca compreender o mecanismo pelos quais os humanos são capazes de
+pensar e à partir disso estabelecer comparações com algum algoritmo que
+eventualmente pudesse replicar estas capacidades.
+
+\subsubsection{Inteligência Racional}
+
+Além do paradigma humano, existe um outro que é a comparação com seres
+racionais. Um ser é dito racional se ele age da ``maneira correta'', dado o que
+ele conhece. Isso nos leva a seguinte definição: um ser é inteligente se ele
+age ou pensa como um ser racional.
+
+Aristóteles foi o primeiro a sistematizar uma maneira de ``pensar
+corretamente''.  Ele foi o criador da disciplina que hoje conhecemos por Lógica
+que estabelecia estruturas argumentativas tais como: ``Sócrates é um homem;
+todos os homens são mortais; portanto, Sócrates é mortal'' as quais sempre
+produzem conclusões corretas. Porém, estes silogismas nem sempre são capazes de
+traduzir conhecimento informal, principalmente em face à incertezas e por isso
+tendem a não ser reconhecidos como tudo que existe em termos de inteligência.
+
+Além disso existem diferenças entre resolver um problema em princípio e
+resolvê-lo na prática. Embora a abordagem pelas ``leis do pensamento'' do
+Aristóteles foquem em realizar inferências corretas, esta não é capaz de
+exaurir o que significa agir como um ser racional pois existem situações em que
+não há uma ação comprovadamente correta, mas em que uma ação deve ser tomada
+mesmo assim. Além disso, existem comportamentos racionais que não podem ser
+deduzidos por mera inferência como, por exemplo, o reflexo de remover
+rapidamente a mão do fogo sem uma cuidadosa pré deliberação sobre o assunto.
+
+O propósito deste trabalho não é exaurir todos os ângulos pelos quais esta
+questão já foi abordada, tais como psicologia, lógica e filosofia mas sim
+apresentar apenas uma introdução permita entender de onde surgiu o campo da
+Inteligência Artificial dentro da ciência da computação.
+
+\subsection{Histórico da Inteligência Artificial}
+
+\subsubsection{Primeiros anos}
+
+O primeiro trabalho a ser considerado efetivamente ``Inteligência Artificial''
+foi feito em 1943 por Warren McCulloch e Walter Pits, no qual foi proposto o
+modelo de funcionamento de um neurônio artificial.  Este neurônio podia assumir
+os estados ``ligado'' e ``desligado'', determinado em resposta aos estímulos
+proporcionados pelos outros neurônios vizinhos. Foi demonstrado também que uma
+rede de neurônios artificial conseguia computar qualquer função computável e
+sugerido que a mesma poderia aprender.
+
+Em 1949 Donald Hebb demonstrou uma simples regra pela qual a força ou os pesos
+numéricos de conexão entre os neurônios poderia ser modificada, a qual ficou
+conhecida como aprendizado hebbiano. Logo em seguida, em 1950, foi construído o
+primeiro computador de rede neural chamado de SNARC que fora feito com 3000
+tubos de vácuo e conseguia simular uma rede de 40 neurônios.
+
+Embora o neurônio artificial seja considerado o primeiro trabalho, o termo
+Inteligência Artificial só viria a ser cunhado mais de 10 anos depois em
+Darthmouth nos Estados Unidos em um workshop organizado por John McCarthy que
+duraria dois meses e cujo propósito era estudar teoria dos autômatos, redes
+neurais e inteligência. Embora não tenha produzido nenhum progresso, o workshop
+serviu para introduzir as principais figuras da área entre si.
+
+Nos seus primeiros anos a IA obteve bastante sucesso. Um a um, os items da
+lista ``uma máquina nunca vai poder fazer X'' compilada por Turing iam sendo
+desbancados. Newel and Simon criaram o primeiro GPS (General Problem Solver),
+um programa desenhado para imitar a maneira como humanos pensam ao invés de
+simplesmente seguir regras lógicas. Na classe limitada de desafios que
+conseguia resolver, a ordem dos subobjetivos que o programa tentava seguir era
+similar à humana. Na IBM, Nathaniel Rochester criaria o primeiro Provador de
+Teoremas Geométricos, o qual conseguia provar teoremas que vários estudantes
+consideravam complexos.  Arthur Samuel refutou a ideia de que programas somente
+conseguiriam fazer o que lhes eram dito criando um programa de computador que
+conseguia jogar um jogo melhor que o seu criador.
+
+Foi nessa época também que McCarthy criaria sua linguagem de programação
+\emph{Lisp} que viraria a linguagem dominante em IA e com a qual ele faria o
+primeiro algoritmo que aceitava novos axiomas, sendo então o primeiro autômato
+que conseguia adquirir novas capacidades sem necessitar ser reprogramado.
+Outras contribuições significativas foram o programa SAINT (1963) que conseguia
+resolver problemas de Cálculo típicos do primeiro ano de curso, o programa
+ANALOGY (1968) respondia a perguntas de analogia geométrica como as de testes
+de QI, o programa STUDENT (1967) resolvia problemas algébricos e o programa
+SHRDLU (1972) era capaz de executar instruções do tipo ``Encontre um bloco
+maior do qu você está segurando agora e o coloque na caixa''. Foi nessa época
+também que foram feitas melhorias no processo de aprendizado Hebbiano que
+ficaram conhecidas como redes \emph{adalines}.
+
+\subsubsection{Maturação e Estado da Arte}
+
+O sucesso inicial foi seguido de um período de relativa estagnação. O fato de
+que estes algoritmos só conseguiam fazer manipulação simbólica e não conheciam
+nada sobre o domínio que trabalhavam provou ser um grande empecilho. Além disso
+a maioria dos primeiros programas de IA tentavam resolver o problema tentando
+várias combinações até que o resultado fosse atingido, o que não era factível
+para instâncias de problemas marginalmente maiores. Foi nesta época que Minsky
+e Papert provaram que um neurônio artificial agora conhecido como
+\emph{perceptron} era restrito no tipo de funções que conseguia representar e o
+financiamento de pesquisas na area se tornou escasso. Já na década de 1970,
+houve o surgimento dos sistemas baseados em conhecimento prévio como o programa
+DENDRAL que viu uma melhora significativa de desempenho na tarefa de inferir a
+estrutura molecular à partir da massa dos seus componentes. O programa que
+inicialmente tentava todas as alternativas possíveis passou a utilizar de
+conhecimento de especialistas em química para identificar subestruturas
+conhecidas o que reduzia significadamente o número de tentativas.
+
+O primeiro caso de sucesso comercial reportado destes sistemas especialistas
+era um programa que ajudava na compra de novos computadores e que teria
+economizado à empresa US\$40 milhões por ano, o que explica o fato destes
+sistemas continuarem sendo usados até hoje.  Bonus Fact: A microsoft incorporou
+vários sistemas especialistas no Windows para corrigir problemas.
+
+Paralelamente, houve o ressurgimento das redes neurais no final da década de
+1980, proporcionado pela reinvenção do algoritmo de \emph{back-propagation},
+uma maneira eficiente de atualizar os pesos das conexões nos neurônios, e
+também uma melhoria nas práticas de pesquisa na área que passou a exigir um
+maior rigor científico acompanhado do uso de bancos de dados padrões que
+permitiam o teste e comparação dos resultados entre diferentes algoritmos. Em
+uma outra linha recente, a ênfase no algoritmo da lugar ao uso de grandes
+quantidades de dados inspirado no trabalho de Yarowsky (1995) que demostrou se
+possível reconhecer se o uso da palavra `plant' significava uma flor ou uma
+fábrica com precisão acima de 96\% sem utilizar de labels fornecidos por
+humanos, apenas com a definição do dicionário desta palavra. Trabalhos como o
+dele sugerem um ``gargalo de conhecimento'' na IA, ou seja, o conhecimento que
+o um sistema precisa pra resolver um problema pode vir de grandes massas de
+dado ao invés de intervenções de especialistas na área. Hoje em dia, a IA está
+em várias aplicações de campos diferentes, como por exemplo:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Na área de robótica veicular com carros auto guiados.
+\item
+  Na área de reconhecimento de fala.
+\item
+  Planejamento automático de tarefas.
+\item
+  Jogos, com destaque para o computador DEEP BLUE da IBM que derrotou o
+  campeão mundial de xadrez, Garry Kasparov.
+\item
+  Controle de SPAN em mensagens de e-mail.
+\item
+  Militar e Logística.
+\end{itemize}
 
 
-  Depth of architecture refers to the number of levels of composition of
-  non-linear operations in the func- tion learned. Whereas most current
-  learning algorithms correspond to shallow architectures (1, 2 or 3 levels),
-  the mammal brain is organized in a deep architecture (Serre, Kreiman, Kouh,
-  Cadieu, Knoblich, & Poggio, 2007) with a given input percept represented at
-  multiple levels of abstraction, each level corresponding to a different area
-  of cortex.  Humans often describe such concepts in hierarchical ways, with
-  multiple levels of abstraction. The brain also appears to process information
-  through multiple stages of transformation and representation. This is
-  particularly clear in the primate visual system (Serre et al., 2007), with
-  its sequence of processing stages: detection of edges, primitive shapes, and
-  moving up to gradually more complex visual shapes.\cite{bengio2009learning}
+Depth of architecture refers to the number of levels of composition of
+non-linear operations in the func- tion learned. Whereas most current learning
+algorithms correspond to shallow architectures (1, 2 or 3 levels), the mammal
+brain is organized in a deep architecture (Serre, Kreiman, Kouh, Cadieu,
+Knoblich, \& Poggio, 2007) with a given input percept represented at multiple
+levels of abstraction, each level corresponding to a different area of cortex.
+Humans often describe such concepts in hierarchical ways, with multiple levels
+of abstraction. The brain also appears to process information through multiple
+stages of transformation and representation. This is particularly clear in the
+primate visual system (Serre et al., 2007), with its sequence of processing
+stages: detection of edges, primitive shapes, and moving up to gradually more
+complex visual shapes.\cite{bengio2009learning}
 
-  More precisely, functions that can be compactly represented by a depth k
-  architecture might require an exponential number of computational elements to
-  be represented by a depth k − 1 architecture. Since the number of
-  computational elements one can afford depends on the number of training
-  examples available to tune or select them, the consequences are not just
-  computational but also statistical: poor generalization may be expected when
-  using an insufficiently deep architecture for representing some
-  functions.\cite{bengio2009learning}
+More precisely, functions that can be compactly represented by a depth k
+architecture might require an exponential number of computational elements to
+be represented by a depth k-1 architecture. Since the number of
+computational elements one can afford depends on the number of training
+examples available to tune or select them, the consequences are not just
+computational but also statistical: poor generalization may be expected when
+using an insufficiently deep architecture for representing some
+functions.\cite{bengio2009learning}
 
-  The most formal arguments about the power of deep architectures come from
-  investigations into computa- tional complexity of circuits. The basic
-  conclusion that these results suggest is that when a function can be
-  compactly represented by a deep architecture, it might need a very large
-  architecture to be represented by an insufficiently deep
-  one.\cite{bengio2009learning}
+The most formal arguments about the power of deep architectures come from
+investigations into computa- tional complexity of circuits. The basic
+conclusion that these results suggest is that when a function can be
+compactly represented by a deep architecture, it might need a very large
+architecture to be represented by an insufficiently deep
+one.\cite{bengio2009learning}
 
-  After having motivated the need for deep architectures that are non-local
-  estimators, we now turn to the difficult problem of training them.
-  Experimental evidence suggests that training deep architectures is more
-  difficult than training shallow architectures (Bengio et al., 2007; Erhan,
-  Manzagol, Bengio, Bengio, & Vin- cent, 2009).\cite{bengio2009learning}
+After having motivated the need for deep architectures that are non-local
+estimators, we now turn to the difficult problem of training them.
+Experimental evidence suggests that training deep architectures is more
+difficult than training shallow architectures (Bengio et al., 2007; Erhan,
+Manzagol, Bengio, Bengio, \& Vin- cent, 2009).\cite{bengio2009learning}
 
-  Until 2006, deep architectures have not been discussed much in the machine
-  learning literature, because of poor training and generalization errors
-  generally obtained (Bengio et al., 2007) using the standard random
-  initialization of the parameters. Note that deep convolutional neural
-  networks (LeCun, Boser, Denker, Hen- derson, Howard, Hubbard, & Jackel, 1989;
-  Le Cun, Bottou, Bengio, & Haffner, 1998; Simard, Steinkraus, & Platt, 2003;
-  Ranzato et al., 2007) were found easier to train, as discussed in Section
-  4.5, for reasons that have yet to be really clarified.  Many unreported
-  negative observations as well as the experimental results in Bengio et al.
-  (2007), Erhan et al. (2009) suggest that gradient-based training of deep
-  supervised multi-layer neural networks (starting from random initialization)
-  gets stuck in “apparent local minima or plateaus”, and that as the
-  architecture gets deeper, it becomes more difficult to obtain good
-  generalization. When starting from random initializa- tion, the solutions
-  obtained with deeper neural networks appear to correspond to poor solutions
-  that perform worse than the solutions obtained for networks with 1 or 2
-  hidden layers (Bengio et al., 2007; Larochelle, Bengio, Louradour, & Lamblin,
-  2009).\cite{bengio2009learning}
+Until 2006, deep architectures have not been discussed much in the machine
+learning literature, because of poor training and generalization errors
+generally obtained (Bengio et al., 2007) using the standard random
+initialization of the parameters. Note that deep convolutional neural
+networks (LeCun, Boser, Denker, Hen- derson, Howard, Hubbard, \& Jackel, 1989;
+Le Cun, Bottou, Bengio, \& Haffner, 1998; Simard, Steinkraus, \& Platt, 2003;
+Ranzato et al., 2007) were found easier to train, as discussed in Section
+4.5, for reasons that have yet to be really clarified.  Many unreported
+negative observations as well as the experimental results in Bengio et al.
+(2007), Erhan et al. (2009) suggest that gradient-based training of deep
+supervised multi-layer neural networks (starting from random initialization)
+gets stuck in “apparent local minima or plateaus”, and that as the
+architecture gets deeper, it becomes more difficult to obtain good
+generalization. When starting from random initializa- tion, the solutions
+obtained with deeper neural networks appear to correspond to poor solutions
+that perform worse than the solutions obtained for networks with 1 or 2
+hidden layers (Bengio et al., 2007; Larochelle, Bengio, Louradour, \& Lamblin,
+2009).\cite{bengio2009learning}
 
-  This happens even though k + 1-layer nets can easily represent what a k-layer
-  net can represent (without much added capacity), whereas the converse is not
-  true. How- ever, it was discovered (Hinton et al., 2006) that much better
-  results could be achieved when pre-training each layer with an unsupervised
-  learning algorithm, one layer after the other, starting with the first layer
-  (that directly takes in input the observed x). The initial experiments used
-  the RBM generative model for each layer (Hinton et al., 2006), and were
-  followed by experiments yielding similar results using variations of
-  auto-encoders for training each layer (Bengio et al., 2007; Ranzato et al.,
-  2007; Vincent et al., 2008).  Most of these papers exploit the idea of greedy
-  layer-wise unsupervised learning (developed in more de- tail in the next
-  section): first train the lower layer with an unsupervised learning algorithm
-  (such as one for the RBM or some auto-encoder), giving rise to an initial set
-  of parameter values for the first layer of a neural network. Then use the
-  output of the first layer (a new representation for the raw input) as input
-  for another layer, and similarly initialize that layer with an unsupervised
-  learning algorithm. After having thus initialized a number of layers, the
-  whole neural network can be fine-tuned with respect to a supervised training
-  criterion as usual.\cite{bengio2009learning}
+This happens even though k + 1-layer nets can easily represent what a k-layer
+net can represent (without much added capacity), whereas the converse is not
+true. How- ever, it was discovered (Hinton et al., 2006) that much better
+results could be achieved when pre-training each layer with an unsupervised
+learning algorithm, one layer after the other, starting with the first layer
+(that directly takes in input the observed x). The initial experiments used
+the RBM generative model for each layer (Hinton et al., 2006), and were
+followed by experiments yielding similar results using variations of
+auto-encoders for training each layer (Bengio et al., 2007; Ranzato et al.,
+2007; Vincent et al., 2008).  Most of these papers exploit the idea of greedy
+layer-wise unsupervised learning (developed in more de- tail in the next
+section): first train the lower layer with an unsupervised learning algorithm
+(such as one for the RBM or some auto-encoder), giving rise to an initial set
+of parameter values for the first layer of a neural network. Then use the
+output of the first layer (a new representation for the raw input) as input
+for another layer, and similarly initialize that layer with an unsupervised
+learning algorithm. After having thus initialized a number of layers, the
+whole neural network can be fine-tuned with respect to a supervised training
+criterion as usual.\cite{bengio2009learning}
 
 \section{Figuras e tabelas}
 

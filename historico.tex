@@ -1,0 +1,202 @@
+\chapter{Histórico}
+
+\section{Inteligência Artificial}
+
+Definir o que é inteligência não é uma tarefa fácil, e inteligência artificial
+é mais difícil ainda. Historicamente, existiram duas abordagens para a
+definição de inteligência: O comparativo com humanos e o comparativo com seres
+racionais.
+
+\subsection{Inteligência Humana}
+
+No primeiro modelo, o seres da espécie humana são tidos como parâmetros e
+portanto, qualquer avaliação de inteligência tem que se refletir em
+comportamentos ou pensamentos similares aos humanos. O Teste de Turing proposto
+pelo matemático Alan Turing (1950) foi uma maneira operacional de estabelecer
+inteligência pelo comparativo comportamental. Em sua versão mais simplificada,
+um computador poderia ser considerado inteligente se, ao ser interrogado por um
+humano com algumas questões, este não pudesse determinar se as respostas eram
+oriundas de um computador ou de uma pessoa. A Ciência Cognitiva, por outro
+lado, busca compreender o mecanismo pelos quais os humanos são capazes de
+pensar e à partir disso estabelecer comparações com algum algoritmo que
+eventualmente pudesse replicar estas capacidades.
+
+\subsection{Inteligência Racional}
+
+Além do paradigma humano, existe um outro que é a comparação com seres
+racionais. Um ser é dito racional se ele age da ``maneira correta'', dado o que
+ele conhece. Isso nos leva a seguinte definição: um ser é inteligente se ele
+age ou pensa como um ser racional.
+
+Aristóteles foi o primeiro a sistematizar uma maneira de ``pensar
+corretamente''.  Ele foi o criador da disciplina que hoje conhecemos por Lógica
+que estabelecia estruturas argumentativas tais como: ``Sócrates é um homem;
+todos os homens são mortais; portanto, Sócrates é mortal'' as quais sempre
+produzem conclusões corretas. Porém, estes silogismas nem sempre são capazes de
+traduzir conhecimento informal, principalmente em face à incertezas e por isso
+tendem a não ser reconhecidos como tudo que existe em termos de inteligência.
+
+Além disso existem diferenças entre resolver um problema em princípio e
+resolvê-lo na prática. Embora a abordagem pelas ``leis do pensamento'' do
+Aristóteles foquem em realizar inferências corretas, esta não é capaz de
+exaurir o que significa agir como um ser racional pois existem situações em que
+não há uma ação comprovadamente correta, mas em que uma ação deve ser tomada
+mesmo assim. Além disso, existem comportamentos racionais que não podem ser
+deduzidos por mera inferência como, por exemplo, o reflexo de remover
+rapidamente a mão do fogo sem uma cuidadosa pré deliberação sobre o assunto.
+
+O propósito deste trabalho não é exaurir todos os ângulos pelos quais esta
+questão já foi abordada, tais como psicologia, lógica e filosofia mas sim
+apresentar apenas uma introdução que permita entender o surgimento do o campo da
+Inteligência Artificial dentro da ciência da computação.
+
+\section{Histórico da Inteligência Artificial}
+
+\subsection{Primeiros anos}
+
+O primeiro trabalho a ser considerado efetivamente ``Inteligência Artificial''
+foi feito em 1943 por Warren McCulloch e Walter Pits, no qual foi proposto o
+modelo de funcionamento de um neurônio artificial.  Este neurônio podia assumir
+os estados ``ligado'' e ``desligado'', determinado em resposta aos estímulos
+proporcionados pelos outros neurônios vizinhos. Foi demonstrado também que uma
+rede de neurônios artificial conseguia computar qualquer função computável e
+sugerido que a mesma poderia aprender.
+
+Em 1949 Donald Hebb demonstrou uma simples regra pela qual a força ou os pesos
+numéricos de conexão entre os neurônios poderia ser modificada, a qual ficou
+conhecida como aprendizado hebbiano. Logo em seguida, em 1950, foi construído o
+primeiro computador de rede neural chamado de SNARC que fora feito com 3000
+tubos de vácuo e conseguia simular uma rede de 40 neurônios.
+
+Embora o neurônio artificial seja considerado o primeiro trabalho, o termo
+Inteligência Artificial só viria a ser cunhado mais de 10 anos depois em
+Darthmouth nos Estados Unidos em um workshop organizado por John McCarthy que
+duraria dois meses e cujo propósito era estudar teoria dos autômatos, redes
+neurais e inteligência. Embora não tenha produzido nenhum progresso, o workshop
+serviu para introduzir as principais figuras da área entre si.
+
+Nos seus primeiros anos a IA obteve bastante sucesso. Um a um, os items da
+lista ``uma máquina nunca vai poder fazer X'' compilada por Turing iam sendo
+desbancados. Newel and Simon criaram o primeiro GPS (General Problem Solver),
+um programa desenhado para imitar a maneira como humanos pensam ao invés de
+simplesmente seguir regras lógicas. Na classe limitada de desafios que
+conseguia resolver, a ordem dos subobjetivos que o programa tentava seguir era
+similar à humana. Na IBM, Nathaniel Rochester criaria o primeiro Provador de
+Teoremas Geométricos, o qual conseguia provar teoremas que vários estudantes
+consideravam complexos.  Arthur Samuel refutou a ideia de que programas somente
+conseguiriam fazer o que lhes eram dito criando um programa de computador que
+conseguia jogar um jogo melhor que o seu criador.
+
+Foi nessa época também que McCarthy criaria sua linguagem de programação
+\emph{Lisp} que viraria a linguagem dominante em IA e com a qual ele faria o
+primeiro algoritmo que aceitava novos axiomas, sendo então o primeiro autômato
+que conseguia adquirir novas capacidades sem necessitar ser reprogramado.
+Outras contribuições significativas foram o programa SAINT (1963) que conseguia
+resolver problemas de Cálculo típicos do primeiro ano de curso, o programa
+ANALOGY (1968) respondia a perguntas de analogia geométrica como as de testes
+de QI, o programa STUDENT (1967) resolvia problemas algébricos e o programa
+SHRDLU (1972) era capaz de executar instruções do tipo ``Encontre um bloco
+maior do que você está segurando agora e o coloque na caixa''. Foi nessa época
+também que foram feitas melhorias no processo de aprendizado Hebbiano que
+ficaram conhecidas como redes \emph{adalines}.
+
+\subsection{Maturação e Estado da Arte}
+
+O sucesso inicial foi seguido de um período de relativa estagnação. O fato de
+que estes algoritmos só conseguiam fazer manipulação simbólica e não conheciam
+nada sobre o domínio que trabalhavam provou ser um grande empecilho. Além disso
+a maioria dos primeiros programas de IA resolviam o problema tentando várias
+combinações até que o resultado fosse atingido, o que não era factível para
+instâncias de problemas marginalmente maiores. Foi nesta época que Minsky e
+Papert provaram que um neurônio artificial agora conhecido como
+\emph{perceptron} era restrito no tipo de funções que conseguia representar e o
+financiamento de pesquisas na area se tornou escasso. Já na década de 1970,
+houve o surgimento dos sistemas baseados em conhecimento prévio como o programa
+DENDRAL que viu uma melhora significativa de desempenho na tarefa de inferir a
+estrutura molecular à partir da massa dos seus componentes. O programa que
+inicialmente tentava todas as alternativas possíveis passou a utilizar de
+conhecimento de especialistas em química para identificar subestruturas
+conhecidas o que reduzia significadamente o número de tentativas.
+
+O primeiro caso de sucesso comercial reportado destes sistemas especialistas
+era um programa que ajudava na compra de novos computadores e que teria
+economizado à empresa US\$40 milhões por ano, o que explica o fato destes
+sistemas continuarem sendo usados até hoje.
+
+Paralelamente, houve o ressurgimento das redes neurais no final da década de
+1980, proporcionado pela reinvenção do algoritmo de \emph{back-propagation},
+uma maneira eficiente de atualizar os pesos das conexões nos neurônios, e
+também uma melhoria nas práticas de pesquisa na área que passou a exigir um
+maior rigor científico acompanhado do uso de bancos de dados padrões que
+permitiam o teste e comparação dos resultados entre diferentes algoritmos. Em
+uma outra linha recente, a ênfase no algoritmo da lugar ao uso de grandes
+quantidades de dados inspirado no trabalho de Yarowsky (1995) que demostrou ser
+possível reconhecer se o uso da palavra \emph{plant} significava uma flor ou uma
+fábrica com precisão acima de 96\% sem utilizar de rótulos fornecidos por
+humanos, apenas com as definições do dicionário desta palavra. Trabalhos como o
+dele sugerem um ``gargalo de conhecimento'' na IA, ou seja, o conhecimento que
+o um sistema precisa pra resolver um problema pode vir de grandes massas de
+dados ao invés de intervenções de especialistas na área. Hoje em dia, a IA está
+em várias aplicações de campos diferentes, como por exemplo:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Na área de robótica veicular com carros auto guiados.
+\item
+  Na área de reconhecimento de fala.
+\item
+  Planejamento automático de tarefas.
+\item
+  Jogos, com destaque para o computador DEEP BLUE da IBM que derrotou o
+  campeão mundial de xadrez, Garry Kasparov.
+\item
+  Controle de SPAN em mensagens de e-mail.
+\item
+  Militar e Logística.
+\end{itemize}
+
+\section{Redes Neurais}
+
+As primeiras definições de uma rede neural artificial foram feitas em 1943 por
+McCulloch and Pits inspiradas na hipótese de que as atividades mentais do
+cérebro humano consistem em reações eletroquímicas em redes de células
+cerebrais chamadas de neurônios. O neurônio artificial, portanto, consiste em
+uma unidade computacional abstrata capaz de receber estímulos de entrada e
+produzir uma ou mais saídas e, consequentemente, uma rede neural artificial ---
+de agora em diante referenciada apenas por rede neural --- consiste em grafo
+direcionado cujos nodos são neurônios artificiais.
+
+\begin{figure}
+  \caption{Abstração de um neurônio artificial}
+  \begin{center}
+    \includegraphics[width=\textwidth]{fig-001-ann}
+  \end{center}
+  \legend{Fonte:~\citen{russell1995modern}}\label{fig:001-ann}
+\end{figure}
+
+Quando a função de ativação $g$ representada na~\ref{fig:001-ann} for uma
+função limite, o neurônio artificial é chamado de \emph{perceptron}; Quando a
+função de ativação $g$ for uma função logística, o neurônio artificial é
+chamado de \emph{perceptron sigmoide} --- devido ao fato da função logística
+ser um tipo particular de sigmoide. Estas funções são usadas para garantir que
+o neurônio consiga reproduzir funções não lineares sendo a principal vantagem da
+função sigmoide é que a mesma é diferenciável em todo o seu domínio, fator que
+mais tarde será relevante na atualização dos pesos das conexões na rede.
+
+Cada neurônio recebe $i$ entradas para cada conexão $j$ que são computadas
+através de uma matriz de pesos $w_{i,j}$ que por sua vez representa o peso
+entre as conexões dos neurônios. Como dito anteriormente, as conexões na rede
+são direcionadas, evitando deliberadamente a retroalimentação das entradas e
+saídas. Quando este tipo de realimentação acontece, a rede é chamada de
+\emph{rede recorrente}, porém o estudo destas redes e suas propriedades foge ao
+escopo deste trabalho.
+
+\begin{figure}
+  \caption{Exemplo de funções de ativação}
+  \begin{center}
+    \includegraphics[width=\textwidth]{fig-002-threshold}
+  \end{center}
+  \legend{Na esquerda uma simples função de limite; à direita a função $\frac{1}{1+e^{-in_j}}$}
+\end{figure}
+

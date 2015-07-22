@@ -1,3 +1,7 @@
+% chktex-file 18 disable warnings about "
+% chktex-file 19 disable warnings about ô
+% chktex-file 6 disable italic correction warnings
+
 \chapter{Histórico}
 
 \section{Inteligência Artificial}
@@ -159,44 +163,112 @@ em várias aplicações de campos diferentes, como por exemplo:
 \section{Redes Neurais}
 
 As primeiras definições de uma rede neural artificial foram feitas em 1943 por
-McCulloch and Pits inspiradas na hipótese de que as atividades mentais do
-cérebro humano consistem em reações eletroquímicas em redes de células
-cerebrais chamadas de neurônios. O neurônio artificial, portanto, consiste em
-uma unidade computacional abstrata capaz de receber estímulos de entrada e
-produzir uma ou mais saídas e, consequentemente, uma rede neural artificial ---
-de agora em diante referenciada apenas por rede neural --- consiste em grafo
-direcionado cujos nodos são neurônios artificiais.
+McCulloch e Pits inspiradas na hipótese de que as atividades mentais do cérebro
+humano consistem em reações eletroquímicas em redes de células cerebrais
+chamadas de neurônios. O neurônio artificial consiste em uma unidade
+computacional abstrata capaz de receber estímulos de entrada e produzir uma ou
+mais saídas e uma rede neural artificial --- de agora em diante referenciada
+apenas por \emph{rede neural} --- consiste em um grafo direcionado cujos nodos
+são neurônios artificiais.
 
 \begin{figure}
   \caption{Abstração de um neurônio artificial}
   \begin{center}
-    \includegraphics[width=\textwidth]{fig-001-ann}
+    \includegraphics[scale=0.5]{placeholder}
   \end{center}
-  \legend{Fonte:~\citen{russell1995modern}}\label{fig:001-ann}
+\end{figure}
+
+\subsection{O neurônio artificial}
+
+Cada neurônio $j$ recebe $m$ entradas ponderadas por um peso $w_{i,j}$,
+correspondente a entrada do seu i-ésimo vizinho. Esta configuração foi
+inspirada nos neurônios naturais cujas interconexões são reguladas por um
+potencial de ativação responsável por diferenciar a intensidade entre as
+mesmas. A saída $y$ é produzida aplicando-se a função limite $\sigma$ na soma
+de todos os inputs ponderados do neurônio. Esta função simula a \emph{lógica de
+  limite} existente nos neurônios naturais, os quais somente irão propagar o
+seu sinal caso haja um acúmulo suficiente de potencial elétrico no neurônio. Em
+sua forma matemática, a saída do neurônio artificial pode ser expressada da
+seguinte forma:
+
+$$y_j=\sigma(\sum_{i=1}^{m}x_i w_{i,j})$$
+
+\subsubsection{Bias}
+
+Um neurônio artificial pode ser visto como um aproximador de funções. Mais
+adiante<TODO>, será explicado que tipo de função pode ser aproximada e em qual
+situação, mas antes cabe aqui explicar algo que frequentemente é pouco tocado
+no estudo de redes neurais que é o objetivo da entrada de \emph{bias} ou
+\emph{viés}. Todo neurônio artificial é dito ter pelo menos uma entrada extra
+$x_0 = 1$ e consequentemente, o peso extra associado $w_{0,j}$ chamado de bias
+$b$. O bias permite que a função aproximada pelo neurônio não necessite
+obrigatoriamente passar pela origem $(0,0)$, o que torna a aproximação mais
+precisa.
+
+\begin{figure}
+  \caption{Exemplo de função aproximada com e sem o vetor de bias}
+  \begin{center}
+    \includegraphics[scale=0.5]{placeholder}
+  \end{center}
+\end{figure}
+
+\subsubsection{Redes neurais}
+
+Em uma rede neural, os neurônios são organizados em \emph{camadas}. Alguns
+autores não consideram a camada de entrada como uma camada distinta mas esta
+abstração permite simplificar a notação e torna o processo de conectar redes
+neurais entre si mais intuitivo. Outra camada especial é a de saída. É ela que
+determina se a rede fará a função de um \emph{classificador} ou de um
+\emph{regressor}. Todas as demais camadas intermediárias são chamadas de
+\emph{camadas ocultas}; o nome não possui nenhuma conotação especial e serve
+apenas para diferenciá-las das camadas de entrada e saída. Em uma rede
+\emph{feed forward} as saídas de cada camada somente são computadas na direção
+e sentido da camada de saída, isto é, não há uma retroalimentação das conexões
+de saída para as de entrada. Quando isto acontece a rede é chamada de
+\emph{recorrente} porém, o estudo deste tipo de rede neural não esta nos
+objetivos deste trabalho.
+
+\begin{figure}
+\label{fig:003-nn}
+  \caption{Exemplo de uma rede neural de 3 camadas}
+  \begin{center}
+    \includegraphics[scale=0.5]{placeholder}
+  \end{center}
+\end{figure}
+
+Para cada camada $S$ existem $R$ neurônios a Figura~\ref{fig:003-nn} formando
+uma matrix de conexões $W$ representada a seguir.
+
+$$ W_{S,R} =
+\begin{bmatrix}
+  w_{1,1} & w_{1,2} & \cdots & w_{1,R} \\
+  w_{2,1} & w_{2,2} & \cdots & w_{2,R} \\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  w_{S,1} & w_{S,2} & \cdots & w_{S,R} 
+\end{bmatrix}
+$$
+
+\subsubsection{Aprendizagem}
+
+A aprendizagem em uma rede neural se da pelo ajuste dos pesos $w$ das conexões
+dos neurônios. Ao longo dos anos foram propostas várias maneiras de atualizar
+os pesos de uma rede neural automaticamente.
+
+\begin{figure}
+\label{fig:002-limit-functions}
+  \caption{Exemplo de funções de ativação}
+  \begin{center}
+    \includegraphics[height=8cm]{placeholder}
+  \end{center}
+  \legend{Na esquerda uma simples função de limite; à direita a função $\frac{1}{1+e^{-x}}$}
 \end{figure}
 
 Quando a função de ativação $g$ representada na~\ref{fig:001-ann} for uma
-função limite, o neurônio artificial é chamado de \emph{perceptron}; Quando a
-função de ativação $g$ for uma função logística, o neurônio artificial é
-chamado de \emph{perceptron sigmoide} --- devido ao fato da função logística
-ser um tipo particular de sigmoide. Estas funções são usadas para garantir que
-o neurônio consiga reproduzir funções não lineares sendo a principal vantagem da
-função sigmoide é que a mesma é diferenciável em todo o seu domínio, fator que
-mais tarde será relevante na atualização dos pesos das conexões na rede.
-
-Cada neurônio recebe $i$ entradas para cada conexão $j$ que são computadas
-através de uma matriz de pesos $w_{i,j}$ que por sua vez representa o peso
-entre as conexões dos neurônios. Como dito anteriormente, as conexões na rede
-são direcionadas, evitando deliberadamente a retroalimentação das entradas e
-saídas. Quando este tipo de realimentação acontece, a rede é chamada de
-\emph{rede recorrente}, porém o estudo destas redes e suas propriedades foge ao
-escopo deste trabalho.
-
-\begin{figure}
-  \caption{Exemplo de funções de ativação}
-  \begin{center}
-    \includegraphics[width=\textwidth]{fig-002-threshold}
-  \end{center}
-  \legend{Na esquerda uma simples função de limite; à direita a função $\frac{1}{1+e^{-in_j}}$}
-\end{figure}
-
+função limite[\ref{fig:002-limit-functions}], o neurônio artificial é chamado
+de \emph{perceptron}; Quando a função de ativação $g$ for uma função logística,
+o neurônio artificial é chamado de \emph{perceptron sigmoide} --- devido ao
+fato de que a função logística é um tipo particular de sigmoide. Estas funções
+são usadas para garantir que o neurônio consiga reproduzir funções não lineares
+sendo a principal vantagem da função sigmoide a sua diferenciabilidade em todo
+o seu domínio, fator que mais tarde será relevante na atualização dos pesos das
+conexões na rede.

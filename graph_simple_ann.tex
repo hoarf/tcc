@@ -1,0 +1,21 @@
+{%
+  \setlength{\belowcaptionskip}{12pt}
+  \begin{figure}
+    \setlength{\textfloatsep}{10pt plus 1.0pt minus 2.0pt}
+    \begin{center}
+      \caption{Representação de uma rede neural simples}
+      \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.3cm, semithick]
+        \tikzstyle{every state}=[fill=white,draw=black,text=black]
+
+        \node[state] (B)                   {};
+        \node[state] (A) [above left of=B] {$x_1$};
+        \node[state] (C) [below left of=B] {$x_2$};
+
+        \path
+        (A) edge node {$w_1$} (B)
+        (C) edge node {$w_2$} (B)
+        (B) edge node {$a=x \dot W$} (2.3,0);
+      \end{tikzpicture}
+    \end{center}
+  \end{figure}
+}%

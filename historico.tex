@@ -180,30 +180,49 @@ são neurônios artificiais.
 
 \subsection{O neurônio artificial}
 
-Cada neurônio $j$ recebe $m$ entradas ponderadas por um peso $w_{i,j}$,
+Cada neurônio recebe $m$ entradas ponderadas por um peso $w_m$,
 correspondente a entrada do seu i-ésimo vizinho. Esta configuração foi
 inspirada nos neurônios naturais cujas interconexões são reguladas por um
 potencial de ativação responsável por diferenciar a intensidade entre as
-mesmas. A saída $y$ é produzida aplicando-se a função limite $\sigma$ na soma
-de todos os inputs ponderados do neurônio. Esta função simula a \emph{lógica de
-  limite} existente nos neurônios naturais, os quais somente irão propagar o
+mesmas. A saída é produzida aplicando-se a função limite $\sigma$ na soma
+de todos as entradas ponderadas do neurônio. Esta função simula a \emph{lógica
+  de limite} existente nos neurônios naturais, os quais somente irão propagar o
 seu sinal caso haja um acúmulo suficiente de potencial elétrico no neurônio. Em
-sua forma matemática, a saída do neurônio artificial pode ser expressada da
+sua forma matemática, a saída $y$ do neurônio artificial pode ser expressada da
 seguinte forma:
 
-$$y_j=\sigma(\sum_{i=1}^{m}x_i w_{i,j})$$
+$$y=\sigma(\sum_{i=1}^{m}x_i w_i + b)$$
+
+A função $\sigma$ representa na verdade uma classe de funções que podem ser
+utilizadas dependendo do objetivo da construção da rede neural. Para problemas
+de classificação \emph{linearmente separáveis}, pode ser usada a função limite
+exemplificada na figura~\ref{fig:lim-functin}, enquanto para problemas não
+linearmente separáveis é necessário utilizar algum tipo de função
+\emph{sigmoide}. A função logística é um exemplo de função sigmoide
+frequentemente utilizada por ser diferenciável em todo o seu domínio, o que
+permite produzir garantias de convergência nos algoritmos de aprendizagem.
+
+O valor $b$ corresponde ao \emph{bias} aplicado a função e pode ser omitido
+simplesmente inserindo-se artificialmente uma nova entrada $x_0 = 1$.
+
+\begin{figure}
+\label{fig:lim-fun}
+  \caption{Exemplo de funções de limite $\sigma$ usadas em neurônios artificiais}
+  \begin{center}
+    \includegraphics[scale=0.5]{placeholder}
+  \end{center}
+\end{figure}
 
 \subsubsection{Bias}
 
 Um neurônio artificial pode ser visto como um aproximador de funções. Mais
-adiante<TODO>, será explicado que tipo de função pode ser aproximada e em qual
-situação, mas antes cabe aqui explicar algo que frequentemente é pouco tocado
-no estudo de redes neurais que é o objetivo da entrada de \emph{bias} ou
-\emph{viés}. Todo neurônio artificial é dito ter pelo menos uma entrada extra
-$x_0 = 1$ e consequentemente, o peso extra associado $w_{0,j}$ chamado de bias
-$b$. O bias permite que a função aproximada pelo neurônio não necessite
-obrigatoriamente passar pela origem $(0,0)$, o que torna a aproximação mais
-precisa.
+adiante<TODO, ref>, será explicado que tipo de função pode ser aproximada e em
+qual situação, mas antes cabe aqui explicar o objetivo da entrada de
+\emph{bias} ou \emph{viés}. Todo neurônio artificial é dito ter pelo menos uma
+entrada extra $x_0 = 1$ e consequentemente, o peso extra associado $w_0$
+chamado de bias $b$. O bias permite que a função aproximada pelo neurônio não
+necessite obrigatoriamente passar pela origem $(0,0)$, o que reduz o erro médio
+da aproximação.
 
 \begin{figure}
   \caption{Exemplo de função aproximada com e sem o vetor de bias}
@@ -215,11 +234,11 @@ precisa.
 \subsubsection{Redes neurais}
 
 Em uma rede neural, os neurônios são organizados em \emph{camadas}. Alguns
-autores não consideram a camada de entrada como uma camada distinta mas esta
+autores não consideram a camada de entrada como uma camada distinta, mas esta
 abstração permite simplificar a notação e torna o processo de conectar redes
-neurais entre si mais intuitivo. Outra camada especial é a de saída. É ela que
-determina se a rede fará a função de um \emph{classificador} ou de um
-\emph{regressor}. Todas as demais camadas intermediárias são chamadas de
+neurais entre si mais intuitivo. Outra camada especial é a de saída, pois é
+ela que determina se a rede exercerá a função de um \emph{classificador} ou de
+um \emph{regressor}. Todas as demais camadas intermediárias são chamadas de
 \emph{camadas ocultas}; o nome não possui nenhuma conotação especial e serve
 apenas para diferenciá-las das camadas de entrada e saída. Em uma rede
 \emph{feed forward} as saídas de cada camada somente são computadas na direção
@@ -227,6 +246,12 @@ e sentido da camada de saída, isto é, não há uma retroalimentação das cone
 de saída para as de entrada. Quando isto acontece a rede é chamada de
 \emph{recorrente} porém, o estudo deste tipo de rede neural não esta nos
 objetivos deste trabalho.
+
+Sendo assim, uma rede neural necessita ter pelo menos duas camadas --- a de
+entrada e a de saída. A adição de camadas ou neurônios não possui um efeito
+óbvio e generalizável para qualquer rede, e portanto é alvo de constante
+experimentação e observação empírica sujeito a comportamento variável
+dependendo do problema.
 
 \begin{figure}
 \label{fig:003-nn}
@@ -236,17 +261,25 @@ objetivos deste trabalho.
   \end{center}
 \end{figure}
 
-Para cada camada $S$ existem $R$ neurônios a Figura~\ref{fig:003-nn} formando
-uma matrix de conexões $W$ representada a seguir.
+Cada camada $S$ é formada por $R$ neurônios, cujos pesos das conexões podem ser
+representados através de uma matriz $W$. A vetorização da computação dos pesos
+das camadas permite que operações mais eficientes sejam utilizadas para
+realizar a computação da saída da rede neural e do ajuste dos pesos.
 
 $$ W_{S,R} =
 \begin{bmatrix}
   w_{1,1} & w_{1,2} & \cdots & w_{1,R} \\
   w_{2,1} & w_{2,2} & \cdots & w_{2,R} \\
   \vdots  & \vdots  & \ddots & \vdots  \\
-  w_{S,1} & w_{S,2} & \cdots & w_{S,R} 
+  w_{S,1} & w_{S,2} & \cdots & w_{S,R}
 \end{bmatrix}
 $$
+
+Com isto o resultado final da rede neural pode ser representado pela equação:
+
+$$ a^{S} = \sigma(Wa^{S-1}+b)$$
+
+O símbolo $a$ representa o vetor de \emph{ativação} dos neurônios da camada S.
 
 \subsubsection{Aprendizagem}
 

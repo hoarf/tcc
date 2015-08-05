@@ -180,7 +180,7 @@ são neurônios artificiais.
 
 \subsection{O neurônio artificial}
 
-Cada neurônio recebe $m$ entradas ponderadas por um peso $w_m$,
+Cada neurônio recebe $m$ entradas ponderadas por um peso $w$,
 correspondente a entrada do seu i-ésimo vizinho. Esta configuração foi
 inspirada nos neurônios naturais cujas interconexões são reguladas por um
 potencial de ativação responsável por diferenciar a intensidade entre as
@@ -222,7 +222,8 @@ qual situação, mas antes cabe aqui explicar o objetivo da entrada de
 entrada extra $x_0 = 1$ e consequentemente, o peso extra associado $w_0$
 chamado de bias $b$. O bias permite que a função aproximada pelo neurônio não
 necessite obrigatoriamente passar pela origem $(0,0)$, o que reduz o erro médio
-da aproximação.
+da aproximação caso os dados de treinamento não tenham sofrido nenhum tipo de
+ajuste numérico como por exemplo a remoção do valor médio.
 
 \begin{figure}
   \caption{Exemplo de função aproximada com e sem o vetor de bias}
@@ -253,8 +254,7 @@ entrada e a de saída. A adição de camadas ou neurônios não possui um efeito
 experimentação e observação empírica sujeito a comportamento variável
 dependendo do problema.
 
-\begin{figure}
-\label{fig:003-nn}
+\begin{figure}\label{fig:003-nn}
   \caption{Exemplo de uma rede neural de 3 camadas}
   \begin{center}
     \includegraphics[scale=0.5]{placeholder}
@@ -262,9 +262,10 @@ dependendo do problema.
 \end{figure}
 
 Cada camada $S$ é formada por $R$ neurônios, cujos pesos das conexões podem ser
-representados através de uma matriz $W$. A vetorização da computação dos pesos
-das camadas permite que operações mais eficientes sejam utilizadas para
-realizar a computação da saída da rede neural e do ajuste dos pesos.
+representados através de uma matriz $W$. A notação em forma vetorial e
+matricial dos pesos das camadas permite que operações mais eficientes sejam
+utilizadas para realizar a computação da saída da rede neural e do ajuste dos
+mesmos.
 
 $$ W_{S,R} =
 \begin{bmatrix}
@@ -275,20 +276,84 @@ $$ W_{S,R} =
 \end{bmatrix}
 $$
 
-Com isto o resultado final da rede neural pode ser representado pela equação:
+A saída ou \emph{ativação} de uma camada $a'$ pode ser expressa em função da
+ativação da camada anterior $a$ da seguinte maneira:
 
-$$ a^{S} = \sigma(Wa^{S-1}+b)$$
+$$a^{'} = \sigma(Wa+b)$$
 
-O símbolo $a$ representa o vetor de \emph{ativação} dos neurônios da camada S.
-
-\subsubsection{Aprendizagem}
+\subsubsection{Uma intuição sobre aprendizagem}
 
 A aprendizagem em uma rede neural se da pelo ajuste dos pesos $w$ das conexões
 dos neurônios. Ao longo dos anos foram propostas várias maneiras de atualizar
-os pesos de uma rede neural automaticamente.
+os pesos de uma rede neural automaticamente através de uma \emph{regra de
+  aprendizagem}. Estas regras foram categorizadas em três grandes grupos:
 
-\begin{figure}
-\label{fig:002-limit-functions}
+\begin{description}
+  \itemsep1pt\parskip0pt\parsep0pt
+
+  \item[Aprendizagem Supervisionada] As entradas são acompanhadas por um
+    conjunto de valores corretamente associados a mesma.
+
+  \item[Aprendizagem Por Reforço] Semelhante ao aprendizado supervisionado,
+    porém ao invés da resposta correta, é fornecido algo como uma nota ou uma
+    indicação da performance da predição.
+
+  \item[Aprendizagem Não Supervisionada] Nenhuma informação adicional a
+    respeito das entradas é fornecida ao algoritmo.
+
+\end{description}
+
+Considere o problema de classificar corretamente os exemplos da
+figura~\ref{fig:percetron-problem-layout}. Os pontos representados no plano dos
+pesos das conexões são:
+
+$$ \mathbf{x_0} =
+\begin{bmatrix}
+  1\\
+  2
+\end{bmatrix}
+\mathbf{x_1} = \begin{bmatrix}
+  3\\
+  4
+\end{bmatrix}
+\mathbf{x_2} = \begin{bmatrix}
+  5\\
+  6
+\end{bmatrix}
+$$
+\begin{figure}\label{fig:perceptron-problem-layout}
+  \caption{Figura com o espaço de solução}
+  \begin{center}
+    \includegraphics[height=8cm]{placeholder}
+  \end{center}
+\end{figure}
+
+O primeiro passo na formulação de um algoritmo de aprendizagem é a estipulação
+de um valor inicial para os pesos das conexões dos neurônios, que pode ser
+aleatória ou baseada em algum valor pré conhecido a respeito do problema e
+depende das propriedades numéricas do mesmo. Para o exemplo do
+\emph{perceptron} acima considere o vetor de pesos $w_0^T=[0.8,0.3]$.
+
+\begin{figure}\label{fig:simple-perceptron}
+  \caption{Uma rede neural simples de um único neurônio}
+  \begin{center}
+    \includegraphics[height=8cm]{placeholder}
+  \end{center}
+\end{figure}
+
+É necessário também escolher uma \emph{função limite} $\sigma$. Para o exemplo
+acima foi escolhida a função $hardlim$:
+i
+$$
+hardlim(n) = \begin{cases}
+  0 & \quad \text{if~} n<0\\
+  1 & \quad \text{if~} n>=0\\
+  \end{cases}
+$$
+
+
+
+\begin{figure}\label{fig:limit-functions-exapmple}
   \caption{Exemplo de funções de ativação}
   \begin{center}
     \includegraphics[height=8cm]{placeholder}
@@ -296,12 +361,12 @@ os pesos de uma rede neural automaticamente.
   \legend{Na esquerda uma simples função de limite; à direita a função $\frac{1}{1+e^{-x}}$}
 \end{figure}
 
-Quando a função de ativação $g$ representada na~\ref{fig:001-ann} for uma
-função limite[\ref{fig:002-limit-functions}], o neurônio artificial é chamado
-de \emph{perceptron}; Quando a função de ativação $g$ for uma função logística,
-o neurônio artificial é chamado de \emph{perceptron sigmoide} --- devido ao
-fato de que a função logística é um tipo particular de sigmoide. Estas funções
-são usadas para garantir que o neurônio consiga reproduzir funções não lineares
-sendo a principal vantagem da função sigmoide a sua diferenciabilidade em todo
-o seu domínio, fator que mais tarde será relevante na atualização dos pesos das
-conexões na rede.
+% Quando a função de ativação $g$ representada na~\ref{fig:001-ann} for uma
+% função limite[\ref{fig:002-limit-functions}], o neurônio artificial é chamado
+% de \emph{perceptron}; Quando a função de ativação $g$ for uma função logística,
+% o neurônio artificial é chamado de \emph{perceptron sigmoide} --- devido ao
+% fato de que a função logística é um tipo particular de sigmoide. Estas funções
+% são usadas para garantir que o neurônio consiga reproduzir funções não lineares
+% sendo a principal vantagem da função sigmoide a sua diferenciabilidade em todo
+% o seu domínio, fator que mais tarde será relevante na atualização dos pesos das
+% conexões na rede.

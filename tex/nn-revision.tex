@@ -39,7 +39,7 @@ $$y=\sigma(\sum_{i=1}^{m}x_i w_i + b)$$
 A função $\sigma$ representa na verdade uma classe de funções que podem ser
 utilizadas dependendo do objetivo da construção da rede neural. Para problemas
 de classificação \emph{linearmente separáveis}, pode ser usada a função limite
-exemplificada na figura~\ref{fig:lim-functin}, enquanto para problemas não
+exemplificada na figura~\ref{fig:lim-fun}, enquanto para problemas não
 linearmente separáveis é necessário utilizar algum tipo de função
 \emph{sigmoide}. A função logística é um exemplo de função sigmoide
 frequentemente utilizada por ser diferenciável em todo o seu domínio, o que
@@ -48,8 +48,7 @@ permite produzir garantias de convergência nos algoritmos de aprendizagem.
 O valor $b$ corresponde ao \emph{bias} aplicado a função e pode ser omitido
 simplesmente inserindo-se artificialmente uma nova entrada $x_0 = 1$.
 
-\begin{figure}
-\label{fig:lim-fun}
+\begin{figure}\label{fig:lim-fun}
   \caption{Exemplo de funções de limite $\sigma$ usadas em neurônios artificiais}
   \begin{center}
     \includegraphics[scale=0.5]{placeholder}
@@ -147,7 +146,7 @@ os pesos de uma rede neural automaticamente através de uma \emph{regra de
 \end{description}
 
 Considere o problema de classificar corretamente os exemplos da
-figura~\ref{fig:percetron-problem-layout}. Os pontos representados no plano dos
+figura~\ref{fig:perceptron-problem-layout}. Os pontos representados no plano dos
 pesos das conexões são:
 
 $$ \mathbf{x_0} =
@@ -164,10 +163,11 @@ $$ \mathbf{x_0} =
   6
 \end{bmatrix}
 $$
+
 \begin{figure}\label{fig:perceptron-problem-layout}
   \caption{Figura com o espaço de solução}
   \begin{center}
-    \includegraphics[height=8cm]{placeholder}
+    \includegraphics[scale=0.5]{placeholder}
   \end{center}
 \end{figure}
 
@@ -180,7 +180,7 @@ depende das propriedades numéricas do mesmo. Para o exemplo do
 \begin{figure}\label{fig:simple-perceptron}
   \caption{Uma rede neural simples de um único neurônio}
   \begin{center}
-    \includegraphics[height=8cm]{placeholder}
+    \includegraphics[scale=0.5]{placeholder}
   \end{center}
 \end{figure}
 
@@ -197,7 +197,7 @@ $$
 \begin{figure}\label{fig:limit-functions-exapmple}
   \caption{Exemplo de funções de ativação}
   \begin{center}
-    \includegraphics[height=8cm]{placeholder}
+    \includegraphics[scale=0.5]{placeholder}
   \end{center}
   \legend{Na esquerda uma simples função de limite; à direita a função $\frac{1}{1+e^{-x}}$}
 \end{figure}

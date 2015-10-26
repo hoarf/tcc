@@ -1,4 +1,6 @@
 % chktex-file 18 disable warnings about "
+% chktex-file 19 disable warnings about ô
+% chktex-file 6 disable italic correction warnings
 
 \section{Deep Learning}
 
@@ -9,49 +11,106 @@ A área de \emph{deep structured learning} que vem sendo conhecida como
 máquina nos últimos anos e as técnicas desenvolvidas nesta área já tem
 impactado uma gama variada de trabalhos em processamento de sinais e
 informações. Embora hajam diferentes definições, este trabalho adotará a
-definição contida em \url{https://github.com/lisa-lab/DeepLearningTutorials}, visto
-que o mesmo trabalho foi utilizado como base para este\cite{deng2014deep}:
+definição contida em \url{https://github.com/lisa-lab/DeepLearningTutorials},
+visto que o mesmo trabalho foi utilizado como base para este\cite{deng2014deep}
 
 \newtheorem{def-deep-learning}{Definição}
 
 \begin{def-deep-learning}
 
-  \begin{quote}\emph{Deep Learning} é uma nova área do aprendizado de máquina que vem sendo
-introduzida com o objetivo de aproximar o Aprendizado de Máquina dos seu
-objetivo original: Inteligência Artificial. \emph{Deep Learning} aborda
-múltiplos níveis de representação e abstração que ajudam a processar dados tais
-como sons, imagens e texto.
-\end{quote}
+  \begin{quote}
+
+    \emph{Deep Learning} é uma nova área do aprendizado de máquina que vem
+    sendo introduzida com o objetivo de aproximar o Aprendizado de Máquina do
+    seu objetivo original: Inteligência Artificial. \emph{Deep Learning} aborda
+    múltiplos níveis de representação e abstração que ajudam a processar dados
+    tais como sons, imagens e texto.
+
+  \end{quote}
 
 \end{def-deep-learning}
 
-% Origem do termo?
+A motivação para o uso de uma rede neural \emph{deep} ao invés das arquiteturas
+tradicionais \emph{shallow}, tais como \emph{Support Vector Machines} visto que
+esta última, a princípio consegue simular qualquer outra, é que existe um
+\emph{tradeoff} entre espaço de memória e tempo de computação que pode ser
+explorado para acelerar o processamento das redes. Uma maneira de entender este
+\emph{tradeoff} em redes neurais é imaginar a saída das camadas intermediárias
+como resultados intermediários da computação de uma rede.
+\emph{shallow}\cite{bengio2007scalling} 
 
-% Exemplos de aplicação
+Ainda assim,\emph{deep supervised learning} é uma tarefa difícil devido ao uso
+de \emph{loss functions} não convexas presentes em problemas de grande
+importância como computação visual.
 
-% Principais diferenças para as redes tradicionais.
+\subsection{Redes Convolucionais}
+
+Redes convolucionais são um tipo especial de \emph{deep networks} projetadas
+especificamente para lidar com dados vetoriais tais como imagens e sons.
+Embora já fosse conhecida há algum tempo na área, este tipo de rede neural
+ganhou fama na competição ImageNet realizada em 2012 na qual ela diminuiu pela
+metade o erro do melhor competidor. Este feito foi atingido com o uso de ReLUs
+(\emph{rectified linear units}), GPUs e uma técnica conhecida como
+\emph{dropout}. Desde então, Redes Convolucionais ganharam força e hoje é a
+melhor técnica para reconhecimento de imagens.\cite{lecun2015deep}
+
+Uma rede convolucional é baseada em 4 ideias principais: conexões locais, pesos
+compartilhados, \emph{pooling} e múltiplas camadas. Conexões locais exploram o
+fato de que em uma imagem existe uma correlação entre os valores dos pixels
+vizinhos. Já pesos compartilhados geram o conceito de \emph{feature maps} e a
+operação de \emph{pooling} (geralmente o máximo local) é usada pois é
+invariante a posição o que da um maior poder de abstração para a
+rede.\cite{lecun2015deep}
+
+A operação de filtro é realizada pela função matemática de convolução, cujo
+papel é detectar conjunções locais nas \emph{features} da camada anterior. Logo
+em seguida vem a camada de \emph{pooling} cujo papel é combinar \emph{features}
+semanticamente semelhantes.\cite{lecun2015deep}
+
+A rede é tipicamente composta de dois a três estágios de convolução seguida da
+aplicação de não linearidade e de \emph{pooling}. Por fim, são aplicadas mais
+camadas convolucionais, desta vez completamente conectadas. O aprendizado é
+feito através de \emph{backpropagation} como em redes neurais
+tradicionais.\cite{lecun2015deep}
+
+\subsubsection{Dropout}
+
+O objetivo da técnica de \emph{dropout} é aproximar a solução ótima de calcular
+a média dos resultados de treinamento de todas as combinações de parâmetros
+possíveis. Isto é feito pela remoção aleatória e temporária de unidades da rede
+bem como suas conexões. Cada unidade é mantida na rede com uma probabilidade
+$p$, independente das outras.\cite{srivastava2014dropout}
+
+Com a aplicação de \emph{dropout} há uma redução no \emph{overfitting} e uma
+melhoria na regularização, porém, o treinamento da rede tende a demorar mais
+gerando um \emph{tradeoff} entre \emph{overfitting} e tempo de
+treinamento.\cite{srivastava2014dropout}
+
+Está técnica não está restrita somente a redes \emph{feed forward} e pode ser
+aplicadas a \emph{RBM} e \emph{autoencoders}, proporcionando uma maneira de
+combinar exponencialmente diferentes arquiteturas
+eficientemente.\cite{srivastava2014dropout}
+
+\begin{figure}
+  \caption{Uma rede neural com a aplicação de dropout}
+  \begin{center}
+    \includegraphics[scale=0.5]{placeholder}
+  \end{center}
+\end{figure}
 
 
-\section{Why deep architetures}
+\subsubsection{ReLU}
 
-% notes from lecun's https://www.youtube.com/watch?v=oOB4evKlEmQ
+Numa rede neural tradicional, as funções $\tanh(x)$ e $\frac{1}{1+e^{-x}}$ são
+usadas para introduzir não linearidade na computação do produto dos pesos pelas
+entradas dos neurônios, porém estas funções possuem a desvantagem de
+apresentarem o fenômeno de saturação. Isto ocorre quando a entrada da função
+está distante da ponto central ($x=0$) provocando uma perda de desempenho no
+aprendizado.\cite{krizhevsky2012imagenet}
 
-% Why deep learning instead of shallow learning since any deep architeture can
-% be simulated by a shallow one?  According to yann le'cun it's because that is
-% a trade-off between 'space' and computing time. It's true that shallow
-% architetures can be simulated by a deeper one, but they run much much slower.
+Por causa disto, o uso de \emph{rectifiers} tem se tornado cada vez mais comum
+no treinamento de grandes redes. Esta função é definida como:
 
-% See: Scaling learning algorithms towards AI
+$$ f(x) = \max(0,x) $$
 
-% Deep Supervised learning is hard beacuse the loss functions that are used in
-% traing are non convex
-
-% Backpropagation does not work well with networks that are tall and skinny
-% lots of layers with few hidden units
-
-% How to deal with limitations of linear classifiers You map the input to a
-% higher dimension input where they are more easily separable
-
-% How to build this: Use knowlege you already have to craft a feature set. We
-% use a standard set of basis functions RBF Simplest approach use a kernel
-% method
+De acordo com \citeauthor{krizhevsky2012imagenet},

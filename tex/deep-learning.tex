@@ -37,11 +37,11 @@ esta última, a princípio consegue simular qualquer outra, é que existe um
 explorado para acelerar o processamento das redes. Uma maneira de entender este
 \emph{tradeoff} em redes neurais é imaginar a saída das camadas intermediárias
 como resultados intermediários da computação de uma rede.
-\emph{shallow}\cite{bengio2007scalling} 
+\emph{shallow}\cite{bengio2007scaling}
 
 Ainda assim,\emph{deep supervised learning} é uma tarefa difícil devido ao uso
 de \emph{loss functions} não convexas presentes em problemas de grande
-importância como computação visual.
+importância como computação a visual.
 
 \subsection{Redes Convolucionais}
 
@@ -73,6 +73,8 @@ camadas convolucionais, desta vez completamente conectadas. O aprendizado é
 feito através de \emph{backpropagation} como em redes neurais
 tradicionais.\cite{lecun2015deep}
 
+\subsubsection{Um breve histórico das CNNs}
+
 \subsubsection{Dropout}
 
 O objetivo da técnica de \emph{dropout} é aproximar a solução ótima de calcular
@@ -101,16 +103,62 @@ eficientemente.\cite{srivastava2014dropout}
 
 \subsubsection{ReLU}
 
-Numa rede neural tradicional, as funções $\tanh(x)$ e $\frac{1}{1+e^{-x}}$ são
+Em uma rede neural tradicional, as funções $\tanh(x)$ e $\frac{1}{1+e^{-x}}$ são
 usadas para introduzir não linearidade na computação do produto dos pesos pelas
-entradas dos neurônios, porém estas funções possuem a desvantagem de
+entradas dos neurônios. Porém, estas funções possuem a desvantagem de
 apresentarem o fenômeno de saturação. Isto ocorre quando a entrada da função
-está distante da ponto central ($x=0$) provocando uma perda de desempenho no
+está distante da ponto central ($x=0$) e provoca uma perda de desempenho no
 aprendizado.\cite{krizhevsky2012imagenet}
 
 Por causa disto, o uso de \emph{rectifiers} tem se tornado cada vez mais comum
-no treinamento de grandes redes. Esta função é definida como:
+no treinamento de grandes redes. Este \emph{rectifier} é definido como:
 
 $$ f(x) = \max(0,x) $$
 
-De acordo com \citeauthor{krizhevsky2012imagenet},
+Quando uma unidade ou neurônio usa este \emph{rectifier} ele é chamado de
+Rectified Linear Unit ou ReLU.\@ De acordo com \citep{krizhevsky2012imagenet},
+ReLUs são muito mais rápidos do que \emph{saturating non linearities} --- como
+são conhecidas as funções mencionadas anteriormente --- e não requerem
+regularização, embora isto ainda seja usado para aumentar o poder de
+generalização da rede.
+
+\begin{figure}
+  \caption{Tipos de não linearidades aplicadas}
+  \begin{center}
+    \includegraphics[scale=0.5]{placeholder}
+  \end{center}
+\end{figure}
+
+\subsubsection{Regularização}
+
+Em uma típica rede \emph{deep} existem milhares de pesos que sofrem adaptação
+em seus valores. Normalmente um aproximador de função com este grande número de
+parâmetros ajustáveis está sujeito a \emph{over fitting}. Redes neurais
+contornam este problema com o uso de regularização tais como:
+
+\begin{itemize}
+
+  \item \emph{Regularização L2}: Para cada peso $w$ da rede, é
+    adicionado uma penalidade $\frac{1}{2}\lambda w^2$, onde $\lambda$ é a
+    força de regularização. O termo $\frac{1}{2}$ é adicionado para facilitar o
+    cálculo da derivada na fase de \emph{backpropagation} e o termo todo tem a
+    interpretação de penalizar vetores de pesos com alguns poucos pesos muito
+    altos e incentivar o uso de vetores difusos, ou seja, eles incentivam a
+    rede a utilizar todos as suas entradas ao invés de usar demasiadamente uma
+    entrada ou outra.
+
+  \item \emph{Regularização L1}: Para cada peso $w$ da rede, é adicionado uma
+    penalidade $\lambda|w|$ com a finalidade de tornar os pesos na rede
+    esparsos (próximos de zero). Isto confere a rede um certo grau de
+    invariabilidade à entradas com ruído. A regularização L1 pode ser usada
+    juntamente com a L2, sendo chamadas neste caso de \emph{Elastic net
+      regularization}.
+
+  \item \emph{Max norm constraints}: Consiste em estipular um valor máximo para
+    os pesos $w$ de maneira que a rede não se torne instável mesmo na presença
+    de uma taxa de aprendizado muito grande.
+
+  \item \emph{Dropout}: A técnica de \emph{dropout} também pode ser vista como
+    uma regularização e pode ser usada juntamente com outros tipos.
+
+\end{itemize}

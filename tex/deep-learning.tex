@@ -43,12 +43,12 @@ Ainda assim,\emph{deep supervised learning} é uma tarefa difícil devido ao uso
 de \emph{loss functions} não convexas presentes em problemas de grande
 importância como computação a visual.
 
-\subsection{Redes Convolucionais}
+\subsection{Redes Convolucionais Modernas}
 
 Redes convolucionais são um tipo especial de \emph{deep networks} projetadas
 especificamente para lidar com dados vetoriais tais como imagens e sons.
 Embora já fosse conhecida há algum tempo na área, este tipo de rede neural
-ganhou fama na competição ImageNet realizada em 2012 na qual ela diminuiu pela
+ganhou fama na competição ILSVRC realizada em 2012 na qual ela diminuiu pela
 metade o erro do melhor competidor. Este feito foi atingido com o uso de ReLUs
 (\emph{rectified linear units}), GPUs e uma técnica conhecida como
 \emph{dropout}. Desde então, Redes Convolucionais ganharam força e hoje é a
@@ -67,13 +67,53 @@ papel é detectar conjunções locais nas \emph{features} da camada anterior. Lo
 em seguida vem a camada de \emph{pooling} cujo papel é combinar \emph{features}
 semanticamente semelhantes.\cite{lecun2015deep}
 
-A rede é tipicamente composta de dois a três estágios de convolução seguida da
+A rede é tipicamente composta de dois a três estágios de convolução seguido da
 aplicação de não linearidade e de \emph{pooling}. Por fim, são aplicadas mais
 camadas convolucionais, desta vez completamente conectadas. O aprendizado é
 feito através de \emph{backpropagation} como em redes neurais
 tradicionais.\cite{lecun2015deep}
 
 \subsubsection{Um breve histórico das CNNs}
+
+A seguir, a listagem adaptada de~\cite{cs231n} das principais contribuições no
+campo das redes convolucionais.
+
+\begin{itemize}
+
+  \item \emph{Neocognitron (1988)}: Criado por
+    \citet{fukushima1988neocognitron}, foi o precursor das redes neurais
+    convolucionais modernas. Consiste em múltiplas camadas de dois tipos de
+    neurônios artificiais que tinham por objetivo simular a configuração
+    observada por \citet{hubel1959receptive} em cérebros de gatos, os quais
+    possuíam células responsáveis por tarefas distintas no reconhecimento
+    visual.
+
+  \item \emph{LeNet (1990)}: Proposta por \citet{le1990handwritten} foi usada
+    com sucesso para reconhecimento de caracteres escritos a mão usando o
+    dataset~MNIST.\@
+
+  \item \emph{AlexNet (2012)}: \citet{krizhevsky2012imagenet} Foi a ganhadora
+    da competição ILSVRC de 2012 e foi a responsável por grande parte do
+    entusiasmo atual com redes convolucionais. Utiliza técnicas como
+    \emph{droppout} e \emph{ReLUs}.
+
+  \item \emph{ZF Net (2013)}: Se destacou na competição ILSVRC de 2013, por
+    apresentar melhorias em relação à AlexNet, com a otimização de
+    hyperparametros e a expansão do número de layers intermediários.
+    \citet{zeiler2014visualizing}
+
+  \item \emph{GoogLeNet (2014)}: A principal contribuição de
+    \citet{szegedy2014going} foi o desenvolvimento de um \emph{Inception
+      Module} que conseguiu reduzir o número de parâmetros (pesos) em 15 vezes.
+
+  \item \emph{VGGNet (2014)}: \citet{zeiler2014visualizing} trouxe sua
+    contribuição demonstrando que a profundidade da arquitetura é um componente
+    crucial do desempenho da rede. Mais tarde foi descoberto que a sua
+    performance supera a da GoogLeNet, embora necessite de mais memória e
+    parâmetros. Hoje, é a rede preferida para extrair \emph{features} de
+    imagens.
+
+\end{itemize}
 
 \subsubsection{Dropout}
 

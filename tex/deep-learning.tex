@@ -11,8 +11,8 @@ A área de \emph{deep structured learning} que vem sendo conhecida como
 máquina nos últimos anos e as técnicas desenvolvidas nesta área já tem
 impactado uma gama variada de trabalhos em processamento de sinais e
 informações. Embora hajam diferentes definições, este trabalho adotará a
-definição contida em \url{https://github.com/lisa-lab/DeepLearningTutorials},
-visto que o mesmo trabalho foi utilizado como base para este\cite{deng2014deep}
+definição contida em \url{https://github.com/lisa-lab/DeepLearningTutorials}:
+\cite{deng2014deep}
 
 \newtheorem{def-deep-learning}{Definição}
 
@@ -31,7 +31,7 @@ visto que o mesmo trabalho foi utilizado como base para este\cite{deng2014deep}
 \end{def-deep-learning}
 
 A motivação para o uso de uma rede neural \emph{deep} ao invés das arquiteturas
-tradicionais \emph{shallow}, tais como \emph{Support Vector Machines} visto que
+tradicionais \emph{shallow}, tais como \emph{Support Vector Machines}, visto que
 esta última, a princípio consegue simular qualquer outra, é que existe um
 \emph{tradeoff} entre espaço de memória e tempo de computação que pode ser
 explorado para acelerar o processamento das redes. Uma maneira de entender este
@@ -41,42 +41,24 @@ como resultados intermediários da computação de uma rede.
 
 Ainda assim,\emph{deep supervised learning} é uma tarefa difícil devido ao uso
 de \emph{loss functions} não convexas presentes em problemas de grande
-importância como computação a visual.
+importância como computação a visual que apresentam a tendência de ficarem
+presas em mínimos locais. Foi somente com os recentes avanços nas técnicas de
+treinamento e arquiteturas de placas de vídeos que hoje é possível treinar
+redes com milhares de pesos em um tempo hábil. Nas próximas sessões, será
+apresentado o histórico e funcionamento destas redes e procedimentos.
 
-\subsection{Redes Convolucionais Modernas}
-
-Redes convolucionais são um tipo especial de \emph{deep networks} projetadas
-especificamente para lidar com dados vetoriais tais como imagens e sons.
-Embora já fosse conhecida há algum tempo na área, este tipo de rede neural
-ganhou fama na competição ILSVRC realizada em 2012 na qual ela diminuiu pela
-metade o erro do melhor competidor. Este feito foi atingido com o uso de ReLUs
-(\emph{rectified linear units}), GPUs e uma técnica conhecida como
-\emph{dropout}. Desde então, Redes Convolucionais ganharam força e hoje é a
-melhor técnica para reconhecimento de imagens.\cite{lecun2015deep}
-
-Uma rede convolucional é baseada em 4 ideias principais: conexões locais, pesos
-compartilhados, \emph{pooling} e múltiplas camadas. Conexões locais exploram o
-fato de que em uma imagem existe uma correlação entre os valores dos pixels
-vizinhos. Já pesos compartilhados geram o conceito de \emph{feature maps} e a
-operação de \emph{pooling} (geralmente o máximo local) é usada pois é
-invariante a posição o que da um maior poder de abstração para a
-rede.\cite{lecun2015deep}
-
-A operação de filtro é realizada pela função matemática de convolução, cujo
-papel é detectar conjunções locais nas \emph{features} da camada anterior. Logo
-em seguida vem a camada de \emph{pooling} cujo papel é combinar \emph{features}
-semanticamente semelhantes.\cite{lecun2015deep}
-
-A rede é tipicamente composta de dois a três estágios de convolução seguido da
-aplicação de não linearidade e de \emph{pooling}. Por fim, são aplicadas mais
-camadas convolucionais, desta vez completamente conectadas. O aprendizado é
-feito através de \emph{backpropagation} como em redes neurais
-tradicionais.\cite{lecun2015deep}
+\subsection{Estado da arte}
 
 \subsubsection{Um breve histórico das CNNs}
 
-A seguir, a listagem adaptada de~\cite{cs231n} das principais contribuições no
-campo das redes convolucionais.
+Embora as CNNs já fossem conhecidas há bastante tempo, o modelo tradicional
+para abordagem de problemas de classificação com \emph{Convolutional Neural
+  Networks} envolvia o desenvolvimento de filtros criados de maneira
+"artesanal"~por humanos. Na prática, isto limitava muito a aplicação de CNNs e
+logo ficou clara a necessidade de um processo que pudesse realizar o
+aprendizado destes filtros de maneira automática. A seguir, a listagem adaptada
+de~\citet{cs231n}, mostra a evolução destas técnicas principalmente na última
+década.
 
 \begin{itemize}
 
@@ -115,6 +97,144 @@ campo das redes convolucionais.
 
 \end{itemize}
 
+\subsubsection{VGGNet}
+
+Até o presente momento, o modelo de \citep{zeiler2014visualizing} --- conhecido
+como VGGNet --- é tido como um dos melhores, obtendo precisão semelhante à
+humanos \citep{human}, com uma taxa de erro na tarefa de classificação da ILSVRC
+de 6,8\% quando a classe correta da imagem não está entre as cinco primeiras
+sugeridas pelo modelo. A competição deste ano (2015) ainda não teve seu
+resultado anunciado, mas é provável que hajam novas melhorias nos modelos
+atuais. Mesmo assim, a VGGNet ainda é um caso relevante para estudo.
+
+\subsubsection{Arquitetura e Modelo}
+
+A arquitetura usada pode ser representada da seguinte maneira:~\cite{cs231n}
+
+\begin{footnotesize}
+\begin{verbatim}
+INPUT:     [224x224x3]    memory:  224*224*3=150K     weights: 0
+CONV3-64:  [224x224x64]   memory:  224*224*64=3.2M    weights: (3*3*3)*64 = 1,728
+CONV3-64:  [224x224x64]   memory:  224*224*64=3.2M    weights: (3*3*64)*64 = 36,864
+POOL2:     [112x112x64]   memory:  112*112*64=800K    weights: 0
+CONV3-128: [112x112x128]  memory:  112*112*128=1.6M   weights: (3*3*64)*128 = 73,728
+CONV3-128: [112x112x128]  memory:  112*112*128=1.6M   weights: (3*3*128)*128 = 147,456
+POOL2:     [56x56x128]    memory:  56*56*128=400K     weights: 0
+CONV3-256: [56x56x256]    memory:  56*56*256=800K     weights: (3*3*128)*256 = 294,912
+CONV3-256: [56x56x256]    memory:  56*56*256=800K     weights: (3*3*256)*256 = 589,824
+CONV3-256: [56x56x256]    memory:  56*56*256=800K     weights: (3*3*256)*256 = 589,824
+POOL2:     [28x28x256]    memory:  28*28*256=200K     weights: 0
+CONV3-512: [28x28x512]    memory:  28*28*512=400K     weights: (3*3*256)*512 = 1,179,648
+CONV3-512: [28x28x512]    memory:  28*28*512=400K     weights: (3*3*512)*512 = 2,359,296
+CONV3-512: [28x28x512]    memory:  28*28*512=400K     weights: (3*3*512)*512 = 2,359,296
+POOL2:     [14x14x512]    memory:  14*14*512=100K     weights: 0
+CONV3-512: [14x14x512]    memory:  14*14*512=100K     weights: (3*3*512)*512 = 2,359,296
+CONV3-512: [14x14x512]    memory:  14*14*512=100K     weights: (3*3*512)*512 = 2,359,296
+CONV3-512: [14x14x512]    memory:  14*14*512=100K     weights: (3*3*512)*512 = 2,359,296
+POOL2:     [7x7x512]      memory:  7*7*512=25K        weights: 0
+FC:        [1x1x4096]     memory:  4096               weights: 7*7*512*4096 = 102,760,448
+FC:        [1x1x4096]     memory:  4096               weights: 4096*4096 = 16,777,216
+FC:        [1x1x1000]     memory:  1000               weights: 4096*1000 = 4,096,000
+
+TOTAL memory: 24M * 4 bytes ~= 93MB / image (only forward! ~*2 for bwd)
+TOTAL params: 138M parameters
+
+\end{verbatim}
+\end{footnotesize}
+
+\emph{INPUT}, \emph{CONV}, \emph{POOL} e \emph{FC} representam camadas na rede
+com funções específicas. INPUT, CONV e POOL são auto explicativos e FC
+significa \emph{Fully Connected}. Os números ao lado do nome da camada se
+referem a características dos filtros que devem ser aprendidos. CONV3\-64, por
+exemplo, indica a presença de 64 filtros cuja distância espacial (altura e
+largura) é igual a 3. Na camada de pooling, somente é representado a distância
+espacial, ou seja 2.
+
+As considerações de memória são cruciais visto que redes convolucionais
+modernas dependem de placas gráficas para acelerar o seu treinamento e a
+maioria destas possuem limites de memória que vão de 3 até 6GB\@.
+
+
+O grande diferencial da VGGNet para a sua maior competidora, a GoogLeNet, é o
+uso de filtros pequenos \emph{$F=3$}, os quais aceleram o treinamento da rede.
+Além disso a rede apresenta uma profundidade (número de camadas) bastante
+elevado (até 19), corroborando a ideia de que a profundidade da rede é
+fundamental para um bom desempenho.
+
+\subsection{Funcionamento}
+
+Redes convolucionais são um tipo especial de \emph{deep networks} projetadas
+especificamente para lidar com dados vetoriais tais como imagens e sons.
+Embora já fosse conhecida há algum tempo na área, este tipo de rede neural
+ganhou fama na competição ILSVRC realizada em 2012 na qual conseguiu-se
+diminuir pela metade o erro do melhor competidor. Este feito foi atingido com o
+uso de ReLUs (\emph{rectified linear units}), GPUs e uma técnica conhecida como
+\emph{dropout}. Desde então, Redes Convolucionais ganharam força e hoje é a
+melhor técnica para reconhecimento de imagens.\cite{lecun2015deep}
+
+Uma rede convolucional é baseada em 4 ideias principais: conexões locais, pesos
+compartilhados, \emph{pooling} e múltiplas camadas. Conexões locais exploram o
+fato de que em uma imagem existe uma correlação entre os valores dos pixels
+vizinhos. Já pesos compartilhados, geram o conceito de \emph{feature maps} e
+reduzem o número de pesos que precisam ser aprendidos e a operação de
+\emph{pooling} (geralmente o máximo local) é usada pois é invariante a posição,
+o que da um maior poder de abstração para a rede.\cite{lecun2015deep}
+
+A operação de filtro é realizada pela função matemática de convolução, cujo
+papel é detectar conjunções locais nas \emph{features} da camada anterior. Logo
+em seguida, vem a camada de \emph{pooling} cujo papel é combinar \emph{features}
+semanticamente semelhantes.\cite{lecun2015deep}
+
+A rede é tipicamente composta de dois a três estágios de convolução seguidos da
+aplicação de não linearidade e de \emph{pooling}. Por fim, são aplicadas mais
+camadas convolucionais, desta vez, completamente conectadas. O aprendizado é
+feito através de \emph{backpropagation} como em redes neurais
+tradicionais.\cite{lecun2015deep}
+
+\subsubsection{Hyper parâmetros}
+
+O termo "hiper parâmetros" se refere as "alavancas" que um \emph{designer} pode
+puxar enquanto decide a arquitetura da rede convolucional. Além dos hyper
+parâmetros tradicionalmente conhecidos das redes neurais convencionais, tais
+como, quantidade de neurônios por camada, função de não linearidade, taxa de
+aprendizado e função de regularização, as redes convolucionais contém alguns
+parâmetros que são exclusivos para o seu funcionamento:
+
+\begin{itemize}
+
+  \item \emph{Número de filtros ($K$):} Este parâmetro regula quantos filtros serão
+    treinados na rede.
+  \item \emph{Stride ($S$):} Se refere ao passo que é dado pela
+    janela de convolução na imagem original.
+  \item \emph{Distância espacial ($F$):}
+    Se refere a largura e altura dos filtros.
+  \item \emph{Padding ou Preenchimento
+      ($P$):} Se refere a largura e altura dos filtros.
+
+\end{itemize}
+
+Porém nem toda combinação destes parâmetros é válida devido a propriedades
+geométricas. Considerando um volume de entrada de dimensões: $W_1 \times H_1 \times D_1$,
+produzirá um volume de tamanho: $W_2 \times H_2 \times D_2$ sendo que:
+$$ W_2= \frac{(W_1-F+2P)}{S+1} $$
+$$ H_2= \frac{(H_1-F+2P)}{S+1} $$
+$$ D_2= F $$
+Uma combinação válida destes parâmetros produz um valor de $W_2$ (ou $H_2$)
+inteiro.
+
+Assumindo o uso de \emph{compartilhamento de parâmetros}, cada filtro adiciona
+um total de $(F \cdot F \cdot D_1)\cdot K$ pesos e $K$ \emph{biases}.
+
+A camada de pooling também possui seu próprio parâmetro $F$ e $S$ e seu respectivo volume de saída terá as dimensões:
+$$W_2 = (W_1 - F)/S + 1$$ 
+$$H_2 = (H_1 - F)/S + 1$$ 
+$$D_2 = D_1$$ 
+\begin{figure}
+  \caption{Exemplo de configuração espacial}
+  \begin{center}
+    \includegraphics[scale=0.5]{placeholder}
+  \end{center}
+\end{figure}
 \subsubsection{Dropout}
 
 O objetivo da técnica de \emph{dropout} é aproximar a solução ótima de calcular
@@ -139,7 +259,6 @@ eficientemente.\cite{srivastava2014dropout}
     \includegraphics[scale=0.5]{placeholder}
   \end{center}
 \end{figure}
-
 
 \subsubsection{ReLU}
 
@@ -171,10 +290,12 @@ generalização da rede.
 
 \subsubsection{Regularização}
 
-Em uma típica rede \emph{deep} existem milhares de pesos que sofrem adaptação
+Em uma típica rede \emph{deep}, existem milhares de pesos que sofrem adaptação
 em seus valores. Normalmente um aproximador de função com este grande número de
-parâmetros ajustáveis está sujeito a \emph{over fitting}. Redes neurais
-contornam este problema com o uso de regularização tais como:
+parâmetros ajustáveis está sujeito a \emph{over fitting}. Isto reduz a
+capacidade de generalização do modelo gerado para entradas que não fizeram
+parte do treinamento. Redes neurais contornam este problema com o uso de
+técnicas de regularização tais como:
 
 \begin{itemize}
 

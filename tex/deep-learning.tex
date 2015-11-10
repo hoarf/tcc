@@ -47,7 +47,20 @@ treinamento e arquiteturas de placas de vídeos que hoje é possível treinar
 redes com milhares de pesos em um tempo hábil. Nas próximas sessões, será
 apresentado o histórico e funcionamento destas redes e procedimentos.
 
-\subsection{Estado da arte}
+\subsection{Taxonomia de redes neurais deep}
+
+O campo das redes neurais de múltiplas camadas possui técnicas que são
+altamente combinadas e recombinadas entre si, o que gera uma explosão de termos
+e conceitos. A sintese a seguir abrange os principais conceitos que permeiam
+o campo das redes neurais profundas.
+
+\begin{description}
+
+  \item[autoencoders:] Um autoassociador ou \emph{autoencoder} é uma rede neural onde a própria camada de entrada é usada como alvo da camada de saída. \ 
+
+\end{description}
+
+\subsection{Convolutional Neural Networks}
 
 \subsubsection{Um breve histórico das CNNs}
 
@@ -113,28 +126,28 @@ A arquitetura usada pode ser representada da seguinte maneira:~\cite{cs231n}
 
 \begin{footnotesize}
 \begin{verbatim}
-INPUT:     [224x224x3]    memory:  224*224*3=150K     weights: 0
-CONV3-64:  [224x224x64]   memory:  224*224*64=3.2M    weights: (3*3*3)*64 = 1,728
-CONV3-64:  [224x224x64]   memory:  224*224*64=3.2M    weights: (3*3*64)*64 = 36,864
-POOL2:     [112x112x64]   memory:  112*112*64=800K    weights: 0
-CONV3-128: [112x112x128]  memory:  112*112*128=1.6M   weights: (3*3*64)*128 = 73,728
-CONV3-128: [112x112x128]  memory:  112*112*128=1.6M   weights: (3*3*128)*128 = 147,456
-POOL2:     [56x56x128]    memory:  56*56*128=400K     weights: 0
-CONV3-256: [56x56x256]    memory:  56*56*256=800K     weights: (3*3*128)*256 = 294,912
-CONV3-256: [56x56x256]    memory:  56*56*256=800K     weights: (3*3*256)*256 = 589,824
-CONV3-256: [56x56x256]    memory:  56*56*256=800K     weights: (3*3*256)*256 = 589,824
-POOL2:     [28x28x256]    memory:  28*28*256=200K     weights: 0
-CONV3-512: [28x28x512]    memory:  28*28*512=400K     weights: (3*3*256)*512 = 1,179,648
-CONV3-512: [28x28x512]    memory:  28*28*512=400K     weights: (3*3*512)*512 = 2,359,296
-CONV3-512: [28x28x512]    memory:  28*28*512=400K     weights: (3*3*512)*512 = 2,359,296
-POOL2:     [14x14x512]    memory:  14*14*512=100K     weights: 0
-CONV3-512: [14x14x512]    memory:  14*14*512=100K     weights: (3*3*512)*512 = 2,359,296
-CONV3-512: [14x14x512]    memory:  14*14*512=100K     weights: (3*3*512)*512 = 2,359,296
-CONV3-512: [14x14x512]    memory:  14*14*512=100K     weights: (3*3*512)*512 = 2,359,296
-POOL2:     [7x7x512]      memory:  7*7*512=25K        weights: 0
-FC:        [1x1x4096]     memory:  4096               weights: 7*7*512*4096 = 102,760,448
-FC:        [1x1x4096]     memory:  4096               weights: 4096*4096 = 16,777,216
-FC:        [1x1x1000]     memory:  1000               weights: 4096*1000 = 4,096,000
+INPUT:     [224x224x3]   memory: 224*224*3=150K   weights: 0
+CONV3-64:  [224x224x64]  memory: 224*224*64=3.2M  weights: (3*3*3)*64 = 1,728
+CONV3-64:  [224x224x64]  memory: 224*224*64=3.2M  weights: (3*3*64)*64 = 36,864
+POOL2:     [112x112x64]  memory: 112*112*64=800K  weights: 0
+CONV3-128: [112x112x128] memory: 112*112*128=1.6M weights: (3*3*64)*128 = 73,728
+CONV3-128: [112x112x128] memory: 112*112*128=1.6M weights: (3*3*128)*128 = 147,456
+POOL2:     [56x56x128]   memory: 56*56*128=400K   weights: 0
+CONV3-256: [56x56x256]   memory: 56*56*256=800K   weights: (3*3*128)*256 = 294,912
+CONV3-256: [56x56x256]   memory: 56*56*256=800K   weights: (3*3*256)*256 = 589,824
+CONV3-256: [56x56x256]   memory: 56*56*256=800K   weights: (3*3*256)*256 = 589,824
+POOL2:     [28x28x256]   memory: 28*28*256=200K   weights: 0
+CONV3-512: [28x28x512]   memory: 28*28*512=400K   weights: (3*3*256)*512 = 1,179,648
+CONV3-512: [28x28x512]   memory: 28*28*512=400K   weights: (3*3*512)*512 = 2,359,296
+CONV3-512: [28x28x512]   memory: 28*28*512=400K   weights: (3*3*512)*512 = 2,359,296
+POOL2:     [14x14x512]   memory: 14*14*512=100K   weights: 0
+CONV3-512: [14x14x512]   memory: 14*14*512=100K   weights: (3*3*512)*512 = 2,359,296
+CONV3-512: [14x14x512]   memory: 14*14*512=100K   weights: (3*3*512)*512 = 2,359,296
+CONV3-512: [14x14x512]   memory: 14*14*512=100K   weights: (3*3*512)*512 = 2,359,296
+POOL2:     [7x7x512]     memory: 7*7*512=25K      weights: 0
+FC:        [1x1x4096]    memory: 4096             weights: 7*7*512*4096 = 102,760,448
+FC:        [1x1x4096]    memory: 4096             weights: 4096*4096 = 16,777,216
+FC:        [1x1x1000]    memory: 1000             weights: 4096*1000 = 4,096,000
 
 TOTAL memory: 24M * 4 bytes ~= 93MB / image (only forward! ~*2 for bwd)
 TOTAL params: 138M parameters
@@ -169,8 +182,8 @@ Embora já fosse conhecida há algum tempo na área, este tipo de rede neural
 ganhou fama na competição ILSVRC realizada em 2012 na qual conseguiu-se
 diminuir pela metade o erro do melhor competidor. Este feito foi atingido com o
 uso de ReLUs (\emph{rectified linear units}), GPUs e uma técnica conhecida como
-\emph{dropout}. Desde então, Redes Convolucionais ganharam força e hoje é a
-melhor técnica para reconhecimento de imagens.\cite{lecun2015deep}
+\emph{dropout}. Desde então, Redes Convolucionais ganharam força e hoje são as
+melhores técnicas para reconhecimento de imagens.\cite{lecun2015deep}
 
 Uma rede convolucional é baseada em 4 ideias principais: conexões locais, pesos
 compartilhados, \emph{pooling} e múltiplas camadas. Conexões locais exploram o
@@ -182,8 +195,8 @@ o que da um maior poder de abstração para a rede.\cite{lecun2015deep}
 
 A operação de filtro é realizada pela função matemática de convolução, cujo
 papel é detectar conjunções locais nas \emph{features} da camada anterior. Logo
-em seguida, vem a camada de \emph{pooling} cujo papel é combinar \emph{features}
-semanticamente semelhantes.\cite{lecun2015deep}
+em seguida, vem a camada de \emph{pooling} cujo papel é combinar
+\emph{features} semanticamente semelhantes.\cite{lecun2015deep}
 
 A rede é tipicamente composta de dois a três estágios de convolução seguidos da
 aplicação de não linearidade e de \emph{pooling}. Por fim, são aplicadas mais
@@ -202,8 +215,8 @@ parâmetros que são exclusivos para o seu funcionamento:
 
 \begin{itemize}
 
-  \item \emph{Número de filtros ($K$):} Este parâmetro regula quantos filtros serão
-    treinados na rede.
+  \item \emph{Número de filtros ($K$):} Este parâmetro regula quantos filtros
+    serão treinados na rede.
   \item \emph{Stride ($S$):} Se refere ao passo que é dado pela
     janela de convolução na imagem original.
   \item \emph{Distância espacial ($F$):}
@@ -214,21 +227,21 @@ parâmetros que são exclusivos para o seu funcionamento:
 \end{itemize}
 
 Porém nem toda combinação destes parâmetros é válida devido a propriedades
-geométricas. Considerando um volume de entrada de dimensões: $W_1 \times H_1 \times D_1$,
-produzirá um volume de tamanho: $W_2 \times H_2 \times D_2$ sendo que:
-$$ W_2= \frac{(W_1-F+2P)}{S+1} $$
-$$ H_2= \frac{(H_1-F+2P)}{S+1} $$
-$$ D_2= F $$
-Uma combinação válida destes parâmetros produz um valor de $W_2$ (ou $H_2$)
-inteiro.
+geométricas. Considerando um volume de entrada de dimensões: $W_1 \times H_1
+\times D_1$, produzirá um volume de tamanho: $W_2 \times H_2 \times D_2$ sendo
+que: $$ W_2= \frac{(W_1-F+2P)}{S+1} $$ $$ H_2= \frac{(H_1-F+2P)}{S+1} $$ $$
+D_2= F $$ Uma combinação válida destes parâmetros produz um valor de $W_2$ (ou
+$H_2$) inteiro.
 
 Assumindo o uso de \emph{compartilhamento de parâmetros}, cada filtro adiciona
 um total de $(F \cdot F \cdot D_1)\cdot K$ pesos e $K$ \emph{biases}.
 
-A camada de pooling também possui seu próprio parâmetro $F$ e $S$ e seu respectivo volume de saída terá as dimensões:
-$$W_2 = (W_1 - F)/S + 1$$ 
-$$H_2 = (H_1 - F)/S + 1$$ 
-$$D_2 = D_1$$ 
+A camada de pooling também possui seu próprio parâmetro $F$ e $S$ e seu
+respectivo volume de saída terá as dimensões:
+
+$$W_2 = (W_1 - F)/S + 1$$
+$$H_2 = (H_1 - F)/S + 1$$
+$$D_2 = D_1$$
 \begin{figure}
   \caption{Exemplo de configuração espacial}
   \begin{center}
@@ -262,9 +275,9 @@ eficientemente.\cite{srivastava2014dropout}
 
 \subsubsection{ReLU}
 
-Em uma rede neural tradicional, as funções $\tanh(x)$ e $\frac{1}{1+e^{-x}}$ são
-usadas para introduzir não linearidade na computação do produto dos pesos pelas
-entradas dos neurônios. Porém, estas funções possuem a desvantagem de
+Em uma rede neural tradicional, as funções $\tanh(x)$ e $\frac{1}{1+e^{-x}}$
+são usadas para introduzir não linearidade na computação do produto dos pesos
+pelas entradas dos neurônios. Porém, estas funções possuem a desvantagem de
 apresentarem o fenômeno de saturação. Isto ocorre quando a entrada da função
 está distante da ponto central ($x=0$) e provoca uma perda de desempenho no
 aprendizado.\cite{krizhevsky2012imagenet}

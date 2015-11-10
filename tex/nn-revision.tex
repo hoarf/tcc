@@ -30,20 +30,20 @@ potencial de ativação responsável por diferenciar a intensidade entre as
 mesmas. A saída é produzida aplicando-se a função limite $\sigma$ na soma
 de todos as entradas ponderadas do neurônio. Esta função simula a \emph{lógica
   de limite} existente nos neurônios naturais, os quais somente irão propagar o
-seu sinal caso haja um acúmulo suficiente de potencial elétrico no neurônio. Em
-sua forma matemática, a saída $y$ do neurônio artificial pode ser expressada da
+seu sinal caso haja um acúmulo suficiente de potencial elétrico no mesmo. Em
+sua forma matemática, a saída $y$ do neurônio artificial pode ser expressa da
 seguinte forma:
 
 $$y=\sigma(\sum_{i=1}^{m}x_i w_i + b)$$
 
-A função $\sigma$ representa na verdade uma classe de funções que podem ser
-utilizadas dependendo do objetivo da construção da rede neural. Para problemas
-de classificação \emph{linearmente separáveis}, pode ser usada a função limite
-exemplificada na figura~\ref{fig:lim-fun}, enquanto para problemas não
-linearmente separáveis é necessário utilizar algum tipo de função
-\emph{sigmoide}. A função logística é um exemplo de função sigmoide
-frequentemente utilizada por ser diferenciável em todo o seu domínio, o que
-permite produzir garantias de convergência nos algoritmos de aprendizagem.
+$\sigma$ representa uma classe de funções que podem ser utilizadas dependendo
+do objetivo da construção da rede neural. Para problemas de classificação
+\emph{linearmente separáveis}, pode ser usada a função limite exemplificada na
+figura~\ref{fig:lim-fun}, enquanto para problemas não linearmente separáveis é
+necessário utilizar algum tipo de função \emph{sigmoide}. A função logística é
+um exemplo de função sigmoide frequentemente utilizada por ser diferenciável em
+todo o seu domínio, o que permite produzir garantias de convergência nos
+algoritmos de aprendizagem.
 
 O valor $b$ corresponde ao \emph{bias} aplicado a função e pode ser omitido
 simplesmente inserindo-se artificialmente uma nova entrada $x_0 = 1$.
@@ -57,15 +57,12 @@ simplesmente inserindo-se artificialmente uma nova entrada $x_0 = 1$.
 
 \subsection{Bias}
 
-Um neurônio artificial pode ser visto como um aproximador de funções. Mais
-adiante<TODO, ref>, será explicado que tipo de função pode ser aproximada e em
-qual situação, mas antes cabe aqui explicar o objetivo da entrada de
-\emph{bias} ou \emph{viés}. Todo neurônio artificial é dito ter pelo menos uma
-entrada extra $x_0 = 1$ e consequentemente, o peso extra associado $w_0$
-chamado de bias $b$. O bias permite que a função aproximada pelo neurônio não
-necessite obrigatoriamente passar pela origem $(0,0)$, o que reduz o erro médio
-da aproximação caso os dados de treinamento não tenham sofrido nenhum tipo de
-ajuste numérico como por exemplo a remoção do valor médio.
+Todo neurônio artificial é dito ter pelo menos uma entrada extra $x_0 = 1$ e
+consequentemente, o peso extra associado $w_0$ chamado de bias $b$. O bias
+permite que a função aproximada pelo neurônio não necessite obrigatoriamente
+passar pela origem $(0,0)$, o que reduz o erro médio da aproximação, caso os
+dados de treinamento não tenham sofrido nenhum tipo de ajuste numérico, como por
+exemplo, a remoção do valor médio.
 
 \begin{figure}
   \caption{Exemplo de função aproximada com e sem o vetor de bias}
@@ -104,7 +101,7 @@ dependendo do problema.
 \end{figure}
 
 Cada camada $S$ é formada por $R$ neurônios, cujos pesos das conexões podem ser
-representados através de uma matriz $W$. A notação em forma vetorial e
+representados através de uma matriz $\mathbf{W}$. A notação em forma vetorial e
 matricial dos pesos das camadas permite que operações mais eficientes sejam
 utilizadas para realizar a computação da saída da rede neural e do ajuste dos
 mesmos.
@@ -118,12 +115,12 @@ $$ W_{S,R} =
 \end{bmatrix}
 $$
 
-A saída ou \emph{ativação} de uma camada $a'$ pode ser expressa em função da
-ativação da camada anterior $a$ da seguinte maneira:
+A saída ou \emph{ativação} de uma camada $\mathbf{\vec a^{\prime}}$ pode ser expressa em função da
+ativação da camada anterior $\mathbf{\vec a}$ da seguinte maneira:
 
-$$a^{'} = \sigma(Wa+b)$$
+$$\mathbf{\vec a^{\prime}} = \sigma(\mathbf{\vec W\vec a+\vec b})$$
 
-\subsection{Uma intuição sobre aprendizagem}
+\subsection{Aprendizagem}
 
 A aprendizagem em uma rede neural se da pelo ajuste dos pesos $w$ das conexões
 dos neurônios. Ao longo dos anos foram propostas várias maneiras de atualizar
@@ -131,6 +128,7 @@ os pesos de uma rede neural automaticamente através de uma \emph{regra de
   aprendizagem}. Estas regras foram categorizadas em três grandes grupos:
 
 \begin{description}
+
   \itemsep1pt\parskip0pt\parsep0pt
 
   \item[Aprendizagem Supervisionada] As entradas são acompanhadas por um
@@ -145,55 +143,6 @@ os pesos de uma rede neural automaticamente através de uma \emph{regra de
 
 \end{description}
 
-Considere o problema de classificar corretamente os exemplos da
-figura~\ref{fig:perceptron-problem-layout}. Os pontos representados no plano dos
-pesos das conexões são:
-
-$$ \mathbf{x_0} =
-\begin{bmatrix}
-  1\\
-  2
-\end{bmatrix}
-\mathbf{x_1} = \begin{bmatrix}
-  3\\
-  4
-\end{bmatrix}
-\mathbf{x_2} = \begin{bmatrix}
-  5\\
-  6
-\end{bmatrix}
-$$
-
-\begin{figure}\label{fig:perceptron-problem-layout}
-  \caption{Figura com o espaço de solução}
-  \begin{center}
-    \includegraphics[scale=0.5]{placeholder}
-  \end{center}
-\end{figure}
-
-O primeiro passo na formulação de um algoritmo de aprendizagem é a estipulação
-de um valor inicial para os pesos das conexões dos neurônios, que pode ser
-aleatória ou baseada em algum valor pré conhecido a respeito do problema e
-depende das propriedades numéricas do mesmo. Para o exemplo do
-\emph{perceptron} acima considere o vetor de pesos $w_0^T=[0.8,0.3]$.
-
-\begin{figure}\label{fig:simple-perceptron}
-  \caption{Uma rede neural simples de um único neurônio}
-  \begin{center}
-    \includegraphics[scale=0.5]{placeholder}
-  \end{center}
-\end{figure}
-
-É necessário também escolher uma \emph{função limite} $\sigma$. Para o exemplo
-acima foi escolhida a função $hardlim$:
-i
-$$
-hardlim(n) = \begin{cases}
-  0 & \quad \text{if~} n<0\\
-  1 & \quad \text{if~} n>=0\\
-  \end{cases}
-$$
-
 \begin{figure}\label{fig:limit-functions-exapmple}
   \caption{Exemplo de funções de ativação}
   \begin{center}
@@ -202,12 +151,36 @@ $$
   \legend{Na esquerda uma simples função de limite; à direita a função $\frac{1}{1+e^{-x}}$}
 \end{figure}
 
-% Quando a função de ativação $g$ representada na~\ref{fig:001-ann} for uma
-% função limite[\ref{fig:002-limit-functions}], o neurônio artificial é chamado
-% de \emph{perceptron}; Quando a função de ativação $g$ for uma função logística,
-% o neurônio artificial é chamado de \emph{perceptron sigmoide} --- devido ao
-% fato de que a função logística é um tipo particular de sigmoide. Estas funções
-% são usadas para garantir que o neurônio consiga reproduzir funções não lineares
-% sendo a principal vantagem da função sigmoide a sua diferenciabilidade em todo
-% o seu domínio, fator que mais tarde será relevante na atualização dos pesos das
-% conexões na rede.
+\subsubsection{Backpropagation}
+
+Obviamente que a aplicabilidade de redes neurais seria extremamente limitada se
+não houvesse uma maneira eficiente de aprender os pesos da rede de forma
+automática.  Atualmente, a melhor maneira conhecida de fazer o mesmo é através
+do algoritmo de \emph{backpropagation}. Este algoritmo embora já sabido desde a
+década de 60, ganhou visibilidade na área de IA na década de 80, quando
+aplicado em redes neurais.\citep{russell1995modern}
+
+O processo de aprendizagem de uma rede neural segue a noção intuitiva que temos
+do assunto: Um individuo faz uma predição acerca de uma proposição ou pergunta,
+avalia o \emph{feedback} recebido do ambiente e corrige a sua previsão baseado
+na distância entre o que foi previsto e o que de fato aconteceu.
+
+A determinação da direção no espaço de pesos da correção é dado pelo
+\emph{gradiente} função de erro $\mathbf{E}$, ou como é mais comumente
+conhecida, \emph{loss function}. A eficiência do algoritmo de backpropagation
+se baseia no fato de que a computação de cada camada depende somente da
+computação das camadas anteriores.
+
+Embora o algoritmo use a derivada da \emph{loss function} pré calculada de
+maneira analítica, é comum ver nas implementações o uso da computação do
+gradiente de maneira iterativa como forma de validação da implementação.
+
+A computação completa da rede neural então, se da em dois passos: O primeiro
+chamado de \emph{forward pass}, a ativação de cada camada é computada até que
+se chegue numa resposta na camada de saída, a qual é usada para calcular o erro
+em cada neurônio e o ajuste dos pesos $\Delta W_{i,j}$ do mesmo de acordo com a
+seguinte equação:
+
+$$ \mathbf{\Delta W_{i,j} = -\alpha\frac{\partial E}{\partial W_{i,j}}} $$
+
+Onde $\alpha$ representa a taxa de aprendizagem.

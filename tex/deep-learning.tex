@@ -4,61 +4,149 @@
 
 \section{Deep Learning}
 
-\subsection{Introdução}
+\subsection{Por que usar deep learning}
 
-A área de \emph{deep structured learning} que vem sendo conhecida como
-\emph{deep learning} surgiu como um novo campo de pesquisa em aprendizado de
-máquina nos últimos anos e as técnicas desenvolvidas nesta área já tem
-impactado uma gama variada de trabalhos em processamento de sinais e
-informações. Embora hajam diferentes definições, este trabalho adotará a
-definição contida em \url{https://github.com/lisa-lab/DeepLearningTutorials}:
-\cite{deng2014deep}
-
-\newtheorem{def-deep-learning}{Definição}
-
-\begin{def-deep-learning}
-
-  \begin{quote}
-
-    \emph{Deep Learning} é uma nova área do aprendizado de máquina que vem
-    sendo introduzida com o objetivo de aproximar o Aprendizado de Máquina do
-    seu objetivo original: Inteligência Artificial. \emph{Deep Learning} aborda
-    múltiplos níveis de representação e abstração que ajudam a processar dados
-    tais como sons, imagens e texto.
-
-  \end{quote}
-
-\end{def-deep-learning}
+Hoje sabemos\citet{hubel1959receptive} que o processamento visual no cérebro
+humano ocorre de maneira gradual e que diferentes regiões são responsáveis pelo
+processamento de diferentes \emph{features} extraídas do estímulo sensorial.
+Primeiro são detectadas abstrações simples como bordas, que por sua vez são
+combinadas em funções mais complexas como detecção de movimento e
+reconhecimento facial. Embora esta seja uma boa fonte de inspiração para o uso
+de \emph{deep neural networks}, pesquisadores da área hesitam em comparar o que
+acontece em uma rede neural artificial com o que acontece dentro de um cérebro
+natural, visto que o completo funcionamento do mesmo é um problema científico
+em aberto.
 
 A motivação para o uso de uma rede neural \emph{deep} ao invés das arquiteturas
-tradicionais \emph{shallow}, tais como \emph{Support Vector Machines}, visto que
-esta última, a princípio consegue simular qualquer outra, é que existe um
-\emph{tradeoff} entre espaço de memória e tempo de computação que pode ser
-explorado para acelerar o processamento das redes. Uma maneira de entender este
-\emph{tradeoff} em redes neurais é imaginar a saída das camadas intermediárias
-como resultados intermediários da computação de uma rede.
+tradicionais \emph{shallow}, tais como \emph{support vector machines} ou redes
+neurais com poucas camadas, visto que estas conseguem simular qualquer outra, é
+que existe um \emph{tradeoff} entre espaço de memória e tempo de computação que
+pode ser explorado para acelerar o processamento das redes.  Uma maneira de
+entender este \emph{tradeoff} em redes neurais, é imaginar a saída das camadas
+escondidas como resultados intermediários da computação.
 \emph{shallow}\cite{bengio2007scaling}
 
-Ainda assim,\emph{deep supervised learning} é uma tarefa difícil devido ao uso
-de \emph{loss functions} não convexas presentes em problemas de grande
-importância como computação a visual que apresentam a tendência de ficarem
-presas em mínimos locais. Foi somente com os recentes avanços nas técnicas de
-treinamento e arquiteturas de placas de vídeos que hoje é possível treinar
-redes com milhares de pesos em um tempo hábil. Nas próximas sessões, será
-apresentado o histórico e funcionamento destas redes e procedimentos.
+Além disso, até bem pouco tempo atras, os melhores resultados nas tarefas de
+classificação e detecção de imagens, videos, sons e linguagem natural
+necessitavam de um amplo conhecimento \emph{a priori} por parte dos cientistas
+cujo trabalho era elaborar \emph{filtros} capazes de sintetizar toda a
+complexidade destas tarefas.
 
-\subsection{Taxonomia de redes neurais deep}
+Devido ao alto custo do desenvolvimento e pesquisa destes filtros, surge a
+necessidade de um método que consiga aprendê-los de maneira automática, mas que
+ainda assim mantenha a precisão dos filtros artesanais. Estes métodos hoje são
+conhecidos como \emph{deep learning} e envolvem um gama variada de técnicas
+para contornar os problemas de arquiteturas com múltiplas camadas, a fim de
+extrair o benefício do tradeoff entre memória e computação mencionado.
 
-O campo das redes neurais de múltiplas camadas possui técnicas que são
-altamente combinadas e recombinadas entre si, o que gera uma explosão de termos
-e conceitos. A sintese a seguir abrange os principais conceitos que permeiam
-o campo das redes neurais profundas.
+\subsection{Problemas com deep learning}
+
+Já que redes neurais já são conhecidas há algum tempo, é de se estranhar que
+ninguém tenha tido a ideia de acrescentar mais camadas nestas redes
+anteriormente. O fato é que simplesmente adicionar mais camadas incorre em
+problemas que até alguns anos atrás eram difíceis de serem contornados.
 
 \begin{description}
 
-  \item[autoencoders:] Um autoassociador ou \emph{autoencoder} é uma rede neural onde a própria camada de entrada é usada como alvo da camada de saída. \ 
+  \item[overfitting:] Uma rede com múltiplas camadas tende a apresentar um
+    número maior de parâmetros que podem ser treinados, o que leva a um
+    problema de \emph{overfitting}, ou seja, a rede simplesmente aprende o
+    conjunto de dados de treinamento, mas não é muito capaz de realizar boas
+    inferências sobre novos conjuntos de dados. Este problema foi combatido com
+    a combinação de algoritmos de aprendizagem não supervisionada que atuam
+    como regularizadores durante a fase de pré treinamento.
+
+  \item[saturação do gradiente:] Para poder aprender funções convexas
+    complexas, é necessário que os neurônios da rede neural apliquem algum tipo
+    de não linearidade em seu processamento. Porém, o algoritmo de
+    \emph{backpropagation}, utilizado na aprendizagem, pode sofrer do fenômeno
+    de saturação do gradiente. Isto ocorre em neurônios cujo valor de ativação
+    estejam próximos dos extremos da função de ativação fazendo com que o
+    gradiente fique próximo de zero. Esta saturação também propagada para as
+    camadas mais inferiores da rede.
+
+  \item[processamento intensivo:] Mesmo com estas técnicas, hoje em dia o
+    processamento de redes profundas é predominantemente feito em GPUs, visto
+    que estes hardwares são altamente especializados em processamento vetorial
+    paralelo. O crescente suporte dos fabricantes destes hardwares e de
+    frameworks e bibliotecas que facilitam a utilização dos mesmos também foi
+    importante fator para tornar o uso de redes com múltiplas camadas viável.
 
 \end{description}
+
+\subsection{Aprendizado não supervisionado}
+
+Aprendizado não supervisionado é usado para regularizar uma rede neural a fim
+de impedir que a mesma apresente um alto grau de over fitting. Os algoritmos
+mais empregados para esta tarefa são \emph{autoencoders} e \emph{Restricted
+  Boltzman Machines}, que atuam no pré treinamento de redes neurais profundas
+como regularizadores, fazendo uma pré calibragem dos parâmetros $W$ antes da
+rede ser completamente conectada e \emph{fine tuned}. Este processo limita os
+valores dos pesos das conexões da rede para um intervalo relativamente pequeno
+e tem gerado bons resultados. Esta combinação de métodos supervisionados com
+não supervisionados é conhecido como aprendizado semi supervisionado.
+
+\subsubsection{Autoencoders}
+
+Autoencoders são redes neurais de representação binária com uma única camada,
+cuja \emph{loss function} usa a própria entrada como alvo de aprendizagem. Caso
+o número de neurônios na camada intermediária seja menor que o número na camada
+de entrada, então o autoencoder aprende uma representação mais compacta para os
+dados de entrada, de fato, dependendo da função de erro usada, um autoencoder
+realiza fatoração de componentes principais na entrada. Se o número de
+neurônios na camada intermediária for maior ou igual ao número de neurônios na
+entrada então os autoencoder não tem grande utilidade, exceto nos
+\emph{denoising autoencoders} onde cada neurônio da entrada original é
+corrompido (setado para 0) com uma probabilidade $p$. Isto confere ao
+autoencoder um pouco de invariabilidade a ruído na rede, o que melhora a
+generalização.
+
+\begin{figure}
+  \caption{Exemplo de Autoencoder}
+  \begin{center}
+    \includegraphics[scale=0.5]{placeholder}
+  \end{center}
+\end{figure}
+
+\subsubsection{Restricted Boltzman Machines}
+
+\emph{Restricted Boltzman Machine} é um exemplo de um formalismo conhecido como
+Modelo Baseado em Energia (EBM). O objetivo de um EBM é encontrar uma função de
+energia $E(X,Y)$ que associa um valor de entrada $X$ e um valor de saída $Y$ a
+um escalar chamado de energia.  Uma boa função de energia é aquela que associa
+um valor baixo para uma configuração $(X,Y)$ desejada, e um valor de energia
+alto caso contrário.\citep{lecun2006tutorial}
+
+Porém, uma Restricted Boltzman Machine é não supervisionada, portanto, a
+variável $Y$ dos rótulos conhecidos é substituída por uma variável escondida
+$h$. A representação mais comum de uma RBM é um grafo bipartido não direcionado
+completamente conexo, onde uma das partições do grafo representa a entrada que
+é visível $v$, e a outra representa a variáveis escondidas do modelo $h$.
+Depois de um aprendizado realizado com sucesso, uma RBM contém a distribuição
+probabilísticas das observações de treinamento.  Essa distribuição é expressa
+pela probabilidade conjunta destas duas variáveis:
+
+$$ p(v,h) = \frac{\exp(-E(v,h))}{Z}$$
+
+Onde, $E(v,h)$ é a \emph{função de energia} que é dada pela fórmula:
+
+$$E(v,h)=\mathbf{-bv^T-ch^T-h^{T}Wv}$$
+
+Onde $\mathbf{b}$ e $\mathbf{c}$ são \emph{bias vectors} e $\mathbf{W}$ é a
+matriz de pesos entre a camada visível e a camada escondida. Intuitivamente, o
+objetivo destes parâmetros é armazenar uma preferência por uma configuração de
+variáveis em particular. Além, disso a função de normalização $Z$ é dada por:
+
+$$ Z = \sum_v \sum_h \exp(-E(v,h)) $$
+
+Esta função geralmente não é tratável.
+
+\begin{figure}
+  \caption{Exemplo de RBM}
+  \begin{center}
+    \includegraphics[scale=0.5]{placeholder}
+  \end{center}
+\end{figure}
 
 \subsection{Convolutional Neural Networks}
 
@@ -177,13 +265,13 @@ fundamental para um bom desempenho.
 \subsection{Funcionamento}
 
 Redes convolucionais são um tipo especial de \emph{deep networks} projetadas
-especificamente para lidar com dados vetoriais tais como imagens e sons.
-Embora já fosse conhecida há algum tempo na área, este tipo de rede neural
-ganhou fama na competição ILSVRC realizada em 2012 na qual conseguiu-se
-diminuir pela metade o erro do melhor competidor. Este feito foi atingido com o
-uso de ReLUs (\emph{rectified linear units}), GPUs e uma técnica conhecida como
-\emph{dropout}. Desde então, Redes Convolucionais ganharam força e hoje são as
-melhores técnicas para reconhecimento de imagens.\cite{lecun2015deep}
+especificamente para lidar com dados vetoriais tais como imagens e sons.  Este
+tipo de rede neural ganhou fama na competição ILSVRC realizada em 2012 na qual
+conseguiu-se diminuir pela metade o erro do melhor competidor. Este feito foi
+atingido com o uso de ReLUs (\emph{rectified linear units}), GPUs e uma técnica
+conhecida como \emph{dropout}. Desde então, Redes Convolucionais ganharam força
+e hoje são as melhores técnicas para reconhecimento de
+imagens.\cite{lecun2015deep}
 
 Uma rede convolucional é baseada em 4 ideias principais: conexões locais, pesos
 compartilhados, \emph{pooling} e múltiplas camadas. Conexões locais exploram o

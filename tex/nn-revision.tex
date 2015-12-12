@@ -166,7 +166,7 @@ avalia o \emph{feedback} recebido do ambiente e corrige a sua previsão baseado
 na distância entre o que foi previsto e o que de fato aconteceu.
 
 A determinação da direção no espaço de pesos da correção é dado pelo
-\emph{gradiente} função de erro $\mathbf{E}$, ou como é mais comumente
+\emph{gradiente} função de erro $\mathbf{L}$, ou como é mais comumente
 conhecida, \emph{loss function}. A eficiência do algoritmo de backpropagation
 se baseia no fato de que a computação de cada camada depende somente da
 computação das camadas anteriores.
@@ -181,6 +181,6 @@ se chegue numa resposta na camada de saída, a qual é usada para calcular o err
 em cada neurônio e o ajuste dos pesos $\Delta W_{i,j}$ do mesmo de acordo com a
 seguinte equação:
 
-$$ \mathbf{\Delta W_{i,j} = -\alpha\frac{\partial E}{\partial W_{i,j}}} $$
+$$ \mathbf{\Delta W_{i,j} = -\alpha\frac{\partial L}{\partial W_{i,j}}} $$
 
 Onde $\alpha$ representa a taxa de aprendizagem.
